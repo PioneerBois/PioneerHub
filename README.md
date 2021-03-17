@@ -87,8 +87,12 @@ An Android Application that can be used to connect the students of CSUEB togethe
     * Stream
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+WireFrames for Login, Register and forgotten password
+
+<img src="https://i.imgur.com/lPKoBHA.jpeg" width=600>
+
+Wireframe for resources, stream, profile, create post and Campus map
+<img src="https://imgur.com/9JHkLc0.jpeg" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 
