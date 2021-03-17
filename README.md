@@ -64,9 +64,7 @@ An Android Application that can be used to connect the students of CSUEB togethe
 
 **Tab Navigation** (Tab to Screen)
 
-* Register
-* Login
-* Creation
+* Campus Resources
 * Stream
 * Profile
 * Map
@@ -90,6 +88,11 @@ An Android Application that can be used to connect the students of CSUEB togethe
 WireFrames for Login, Register and forgotten password
 
 <img src="https://i.imgur.com/lPKoBHA.jpeg" width=600>
+
+### Possible color schemes
+* Red: C1121F
+* Black: 011627
+* White: FAF9F9
 
 Wireframe for resources, stream, profile, create post and Campus map
 <img src="https://imgur.com/9JHkLc0.jpeg" width=600>
