@@ -8,7 +8,7 @@
 
 ## Overview
 ### Description
-An Android Application that can be used to connect the students of CSUEB together. The app hosts a feed that displays a student feed and up-to-date information regarding many of the available student services. The userbase of the application is be divided amongst current/previous students, professors, staff and community members. Each role has features and sets of actions that they can perform based on their role. PioneerHub also can be used as a messaging platform to facilitate group activity and community efforts. Ultimately PioneerHub is here to provide a sense of community and unity to the CSUEB family. 
+PioneerHub is a social platform that connects the CSUEB community together. PioneerHub is your go-to for reaching out to not only your classmates but also your department peers. Features include feed that displays student post, Groups based on shared topics, direct messaging, up-to-date information regarding many of the available student services. PioneerHub is here to provide a sense of community and unity to the CSUEB family.
 
 
 ### App Evaluation
@@ -101,11 +101,19 @@ Wireframe for resources, stream, profile, create post and Campus map
 
 ### [BONUS] Interactive Prototype
 
-## Schema 
-[This section will be completed in Unit 9]
+## Schema
 ### Models
 [Add table of models]
+<img src="https://imgur.com/fe3NjeE.jpeg" width=600>
+
+<img src="https://imgur.com/UMWTAIH.jpeg" width=600>
+
+<img src="https://imgur.com/Ktjuf6o.jpeg" width=600>
+
 ### Networking
 - [Add list of network requests by screen ]
+    <img src="https://imgur.com/irftWUh.jpeg" width=600>
+    <img src="https://imgur.com/W8aCT4h.jpeg" width=600>
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
+    <img src="https://imgur.com/fHup2br.jpeg" width=600>
