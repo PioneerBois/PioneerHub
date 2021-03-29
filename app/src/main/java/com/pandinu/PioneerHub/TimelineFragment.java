@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -25,6 +26,7 @@ public class TimelineFragment extends Fragment {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
+    private ActionBarDrawerToggle drawerToggle;
 
     public interface TimeLineFragmentListener{
         void toPostSent();
@@ -55,6 +57,16 @@ public class TimelineFragment extends Fragment {
 
         // Find our drawer view
         mDrawer = (DrawerLayout) v.findViewById(R.id.drawer_layout);
+        drawerToggle = setupDrawerToggle();
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerToggle.syncState();
+
+        // Tie DrawerLayout events to the ActionBarToggle
+        mDrawer.addDrawerListener(drawerToggle);
+        //drawerToggle = ((AppCompatActivity)getActivity()).setupDrawerToggle();
+
+        // Setup toggle to display hamburger icon with nice animation
+        //((AppCompatActivity)getActivity()) drawerToogle.setDrawerIndicatorEnabled(true);
 
         tvToPost = v.findViewById(R.id.tvToPost);
         tvToPost.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +77,10 @@ public class TimelineFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(getActivity(), mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
 
     @Override
