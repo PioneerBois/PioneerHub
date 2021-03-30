@@ -5,8 +5,33 @@
         <group android:checkableBehavior="single">
             <item
                 android:id="@+id/studentFeed"
-                android:icon="@drawable/ic_baseline_done_outline_24"
+                android:icon="@drawable/ic_baseline_school_24"
                 android:title="Student Feed" />
+
+            <item
+                android:id="@+id/buyAndSell"
+                android:icon="@drawable/ic_baseline_sell_24"
+                android:title="@string/buy_and_sell" />
+
+            <item
+                android:id="@+id/lostAndFound"
+                android:icon="@drawable/ic_baseline_help_24"
+                android:title="@string/lost_and_found" />
+
+            <item
+                android:id="@+id/housing"
+                android:icon="@drawable/ic_baseline_house_24"
+                android:title="@string/housing" />
+
+            <item
+                android:id="@+id/news"
+                android:icon="@drawable/ic_baseline_new_releases_24"
+                android:title="@string/news" />
+
+            <item
+                android:id="@+id/rideSharing"
+                android:icon="@drawable/ic_baseline_directions_car_24"
+                android:title="@string/ride_sharing" />
 
         </group>
         </menu>

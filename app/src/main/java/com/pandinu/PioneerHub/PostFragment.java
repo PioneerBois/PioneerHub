@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,8 +27,8 @@ public class PostFragment extends Fragment {
     private PostFragmentListener listener;
 
     public interface PostFragmentListener{
-        void cancelPost();
-        void successfulPost();
+        void cancelPost(String channel);
+        void successfulPost(String channel);
     }
 
 
@@ -41,6 +42,8 @@ public class PostFragment extends Fragment {
     private Button btnTakePhoto;
     private Button btnChoosePhoto;
     private Button btnCancelImage;
+    private static final String ARG_CHANNEL = "";
+    private String currentChannel = "";
 
 
 
@@ -54,12 +57,24 @@ public class PostFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    public static PostFragment newInstance(String channel) {
+        PostFragment fragment = new PostFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        args.putString(ARG_CHANNEL, channel);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_post, container, false);
 
+        if(getArguments() != null){
+            currentChannel = getArguments().getString(ARG_CHANNEL);
+        }
+        Log.i("currentChannel", currentChannel);
         String[] channels = getResources().getStringArray(R.array.channels);
         actvChannels = v.findViewById(R.id.actvChannels);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
@@ -78,7 +93,7 @@ public class PostFragment extends Fragment {
         buttonCancelPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.cancelPost();
+                listener.cancelPost(currentChannel);
             }
         });
 
@@ -86,7 +101,7 @@ public class PostFragment extends Fragment {
         btnComposePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.successfulPost();
+                listener.successfulPost(currentChannel);
             }
         });
 

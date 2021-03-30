@@ -4,8 +4,13 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="what_s_on_your_mind">What\'s on your mind?</string>
     <string name="channels">Channels</string>
+    <string name="student_feed">Student Feed</string>
+    <string name="buy_and_sell">Buy and Sell</string>
+
+
     <string name="select_a_channel">Select a Channel</string>
     <string name="post">Post</string>
+
 
     <string-array name="channels">
         <item>Student Feed</item>
@@ -18,4 +23,8 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="lost_and_found"><![CDATA[Lost & Found]]></string>
+    <string name="housing">Housing</string>
+    <string name="ride_sharing">Ride Sharing</string>
+    <string name="news">News</string>
 </resources>

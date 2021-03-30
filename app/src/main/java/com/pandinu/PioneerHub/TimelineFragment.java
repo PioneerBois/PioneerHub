@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -28,9 +30,12 @@ public class TimelineFragment extends Fragment {
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+    private FloatingActionButton fabToPost;
+    private static final String ARG_CHANNEL = "";
+    private String currentChannel = "";
 
     public interface TimeLineFragmentListener{
-        void toPostSent();
+        void toPostSent(String channel);
     }
     public TimelineFragment() {
         // Required empty public constructor
@@ -42,11 +47,27 @@ public class TimelineFragment extends Fragment {
 
     }
 
+    public static TimelineFragment newInstance(String channel) {
+        TimelineFragment fragment = new TimelineFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_CHANNEL, channel);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_time_line, container, false);
+
+        if(getArguments() != null){
+            //Log.i("getArguments" , "getArguments");
+            currentChannel = getArguments().getString(ARG_CHANNEL);
+        }
+
+        Log.i("currentChannel", currentChannel);
+        //Log.i("currentChannel", currentChannel);
 
 
         // Set a Toolbar to replace the ActionBar.
@@ -67,6 +88,9 @@ public class TimelineFragment extends Fragment {
         nvDrawer = (NavigationView) v.findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+
+        setDrawerToCurrentChannel();
+
         //drawerToggle = ((AppCompatActivity)getActivity()).setupDrawerToggle();
 
         // Setup toggle to display hamburger icon with nice animation
@@ -76,11 +100,39 @@ public class TimelineFragment extends Fragment {
         tvToPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.toPostSent();
+                listener.toPostSent(currentChannel);
             }
         });
 
+        fabToPost = v.findViewById(R.id.fabToPost);
+        fabToPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.toPostSent(currentChannel);
+            }
+        });
+
+        //Log.i("getcalled", "getcallled");
+
         return v;
+    }
+
+    private void setDrawerToCurrentChannel() {
+        if(currentChannel.equals(getString(R.string.student_feed))){
+            nvDrawer.setCheckedItem(R.id.studentFeed);
+        }else if(currentChannel.equals(getString(R.string.buy_and_sell))){
+            nvDrawer.setCheckedItem(R.id.buyAndSell);
+        }else if(currentChannel.equals(getString(R.string.lost_and_found))){
+            nvDrawer.setCheckedItem(R.id.lostAndFound);
+        }else if(currentChannel.equals(getString(R.string.housing))){
+            nvDrawer.setCheckedItem(R.id.housing);
+        }else if(currentChannel.equals(getString(R.string.news))){
+            nvDrawer.setCheckedItem(R.id.news);
+        }else if(currentChannel.equals(getString(R.string.ride_sharing))){
+            nvDrawer.setCheckedItem(R.id.rideSharing);
+        }else{
+            nvDrawer.setCheckedItem(R.id.studentFeed);
+        }
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -97,11 +149,40 @@ public class TimelineFragment extends Fragment {
     private void selectDrawerItem(MenuItem menuItem) {
         switch(menuItem.getItemId()) {
             case R.id.studentFeed:
-                Toast.makeText(getActivity(), "studentFeed", Toast.LENGTH_SHORT).show();
+                currentChannel = getString(R.string.student_feed);
+                Toast.makeText(getActivity(), currentChannel, Toast.LENGTH_SHORT).show();
+                mDrawer.closeDrawers();
+                break;
+            case R.id.buyAndSell:
+                currentChannel= getString(R.string.buy_and_sell);
+                Toast.makeText(getActivity(), currentChannel, Toast.LENGTH_SHORT).show();
+                mDrawer.closeDrawers();
+                break;
+            case R.id.lostAndFound:
+                currentChannel= getString(R.string.lost_and_found);
+                Toast.makeText(getActivity(), currentChannel, Toast.LENGTH_SHORT).show();
+                mDrawer.closeDrawers();
+                break;
+            case R.id.housing:
+                currentChannel= getString(R.string.housing);
+                Toast.makeText(getActivity(), currentChannel, Toast.LENGTH_SHORT).show();
+                mDrawer.closeDrawers();
+                break;
+            case R.id.news:
+                currentChannel= getString(R.string.news);
+                Toast.makeText(getActivity(), currentChannel, Toast.LENGTH_SHORT).show();
+                mDrawer.closeDrawers();
+                break;
+            case R.id.rideSharing:
+                currentChannel= getString(R.string.ride_sharing);
+                Toast.makeText(getActivity(), currentChannel, Toast.LENGTH_SHORT).show();
                 mDrawer.closeDrawers();
                 break;
             default:
-                Toast.makeText(getActivity(), "default", Toast.LENGTH_SHORT).show();
+                currentChannel = getString(R.string.student_feed);
+                Toast.makeText(getActivity(), currentChannel, Toast.LENGTH_SHORT).show();
+                mDrawer.closeDrawers();
+                break;
         }
     }
 

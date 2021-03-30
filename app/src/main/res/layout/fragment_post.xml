@@ -124,7 +124,7 @@
                 android:inputType="textMultiLine"
                 android:minLines="5"
                 android:maxLength="280"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:background="@drawable/border"
                 />
 

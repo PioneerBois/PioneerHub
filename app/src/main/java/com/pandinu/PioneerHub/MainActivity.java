@@ -7,8 +7,8 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity implements TimelineFragment.TimeLineFragmentListener, PostFragment.PostFragmentListener{
 
-    private FragmentTransaction ft;
-    private TimelineFragment timeLineFragment;
+    //private FragmentTransaction ft;
+    //private TimelineFragment timeLineFragment;
     //private PostFragment postFragment;
 
 
@@ -18,34 +18,39 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        timeLineFragment = new TimelineFragment();
+        //timeLineFragment = new TimelineFragment();
         //postFragment = new PostFragment();
 
 
-        ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, timeLineFragment);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        TimelineFragment fragment = TimelineFragment.newInstance(getString(R.string.student_feed));
+        ft.replace(R.id.container, fragment);
         ft.commit();
 
     }
 
     @Override
-    public void toPostSent() {
+    public void toPostSent(String channel) {
         FragmentTransaction toPostTransaction = getSupportFragmentManager().beginTransaction();
-        toPostTransaction.replace(R.id.container, new PostFragment());
+        PostFragment fragment = PostFragment.newInstance(channel);
+        toPostTransaction.replace(R.id.container, fragment);
         toPostTransaction.commit();
     }
 
     @Override
-    public void cancelPost() {
+    public void cancelPost(String channel) {
         FragmentTransaction cancelPost = getSupportFragmentManager().beginTransaction();
-        cancelPost.replace(R.id.container, timeLineFragment);
+        TimelineFragment fragment = TimelineFragment.newInstance(channel);
+        cancelPost.replace(R.id.container, fragment);
         cancelPost.commit();
     }
 
     @Override
-    public void successfulPost() {
+    public void successfulPost(String channel) {
         FragmentTransaction successfulPost = getSupportFragmentManager().beginTransaction();
-        successfulPost.replace(R.id.container, timeLineFragment);
+        TimelineFragment fragment = TimelineFragment.newInstance(channel);
+        successfulPost.replace(R.id.container, fragment);
         successfulPost.commit();
+
     }
 }
