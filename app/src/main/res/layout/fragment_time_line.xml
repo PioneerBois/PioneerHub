@@ -65,6 +65,7 @@
     <!-- Note that `android:layout_gravity` needs to be set to 'start' -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nvView"
+        app:headerLayout="@layout/timeline_header_navigation_drawer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
