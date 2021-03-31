@@ -27,4 +27,8 @@
     <string name="housing">Housing</string>
     <string name="ride_sharing">Ride Sharing</string>
     <string name="news">News</string>
+    <string name="edit_info_button">Edit Info</string>
+    <string name="cover_image">Cover Image</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="setting">Setting</string>
 </resources>
