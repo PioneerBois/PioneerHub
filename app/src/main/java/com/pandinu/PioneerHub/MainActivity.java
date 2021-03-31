@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.pandinu.PioneerHub.Model.User;
+
 public class MainActivity extends AppCompatActivity implements TimelineFragment.TimeLineFragmentListener, PostFragment.PostFragmentListener{
 
     //private FragmentTransaction ft;
@@ -21,10 +23,20 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
         //timeLineFragment = new TimelineFragment();
         //postFragment = new PostFragment();
 
+        //This will pass a serializable user object in the future
+        ProfileFragment profileFragment = ProfileFragment.newInstance(
+                "Harry Potter",
+                "Im a hairy wizard, Hagrid!",
+                "Cupboard underneath the stairs",
+                "https://st3.depositphotos.com/15648834/17930/v/1600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg",
+                "https://external-preview.redd.it/uhq5zTcMPM3tOW_fbUz4PayDt_5pkEXdyXXoRWs3XOg.jpg?width=960&crop=smart&auto=webp&s=1a732c9516521dd48e60bf092ab49df8d291e744"
+                );
+
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        TimelineFragment fragment = TimelineFragment.newInstance(getString(R.string.student_feed));
-        ft.replace(R.id.container, fragment);
+        //TimelineFragment fragment = TimelineFragment.newInstance(getString(R.string.student_feed));
+        //ft.replace(R.id.container, fragment);
+        ft.replace(R.id.container, profileFragment);
         ft.commit();
 
     }
