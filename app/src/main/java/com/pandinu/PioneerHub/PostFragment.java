@@ -31,9 +31,6 @@ public class PostFragment extends Fragment {
         void successfulPost(String channel);
     }
 
-
-
-    private AutoCompleteTextView actvChannels;
     private Button buttonCancelPost;
     private Button btnComposePost;
     private Button btnResetPost;
@@ -75,18 +72,7 @@ public class PostFragment extends Fragment {
             currentChannel = getArguments().getString(ARG_CHANNEL);
         }
         Log.i("currentChannel", currentChannel);
-        String[] channels = getResources().getStringArray(R.array.channels);
-        actvChannels = v.findViewById(R.id.actvChannels);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, channels);
-        actvChannels.setAdapter(adapter);
-        actvChannels.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                actvChannels.showDropDown();
-                return false;
-            }
-        });
+
 
         buttonCancelPost = v.findViewById(R.id.buttonCancelPost);
 

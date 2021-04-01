@@ -67,42 +67,15 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/llChannels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@+id/rvProfile"
-            >
 
-            <TextView
-                android:id="@+id/tvChannels"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:text="@string/channels"/>
-
-            <AutoCompleteTextView
-                android:id="@+id/actvChannels"
-                android:background="@drawable/border"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="5dp"
-                android:completionThreshold="0"
-                android:padding="5dp"
-                android:hint="@string/select_a_channel"
-                />
-        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/llPost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            android:layout_below="@+id/llChannels">
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/rvProfile">
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -111,7 +84,8 @@
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:text="@string/post"
+                android:text="@string/what_s_on_your_mind"
+
                 />
             <EditText
                 android:id="@+id/etPostDescription"
@@ -125,7 +99,7 @@
                 android:minLines="5"
                 android:maxLength="280"
                 android:padding="10dp"
-                android:background="@drawable/border"
+                android:background="@drawable/full_border"
                 />
 
             <Button
@@ -175,7 +149,7 @@
             android:layout_marginTop="10dp"
             android:padding="5dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/border">
+            android:background="@drawable/full_border">
 
             <Button
                 android:id="@+id/btnTakePhoto"

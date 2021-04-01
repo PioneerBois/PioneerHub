@@ -1,6 +1,7 @@
 package com.pandinu.PioneerHub;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.os.Bundle;
 public class MainActivity extends AppCompatActivity implements TimelineFragment.TimeLineFragmentListener, PostFragment.PostFragmentListener{
 
     //private FragmentTransaction ft;
-    //private TimelineFragment timeLineFragment;
+    private TimelineFragment timeLineFragment;
     //private PostFragment postFragment;
 
 
@@ -18,14 +19,18 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //timeLineFragment = new TimelineFragment();
-        //postFragment = new PostFragment();
 
 
+        timeLineFragment = new TimelineFragment(getString(R.string.student_feed));
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        TimelineFragment fragment = TimelineFragment.newInstance(getString(R.string.student_feed));
-        ft.replace(R.id.container, fragment);
+        ft.replace(R.id.container, timeLineFragment);
         ft.commit();
+        timeLineFragment.queryPost(getString(R.string.student_feed));
+
+
+
+
+
 
     }
 
@@ -40,17 +45,17 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
     @Override
     public void cancelPost(String channel) {
         FragmentTransaction cancelPost = getSupportFragmentManager().beginTransaction();
-        TimelineFragment fragment = TimelineFragment.newInstance(channel);
-        cancelPost.replace(R.id.container, fragment);
+        cancelPost.replace(R.id.container, timeLineFragment);
         cancelPost.commit();
     }
 
     @Override
     public void successfulPost(String channel) {
         FragmentTransaction successfulPost = getSupportFragmentManager().beginTransaction();
-        TimelineFragment fragment = TimelineFragment.newInstance(channel);
-        successfulPost.replace(R.id.container, fragment);
+        //TimelineFragment fragment = new TimelineFragment(channel);
+        successfulPost.replace(R.id.container, timeLineFragment);
         successfulPost.commit();
-
+        timeLineFragment.queryPost(channel);
+        //timeLineFragment.setToolbarTitle();
     }
 }

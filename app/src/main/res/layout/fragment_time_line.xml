@@ -4,50 +4,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <!-- This LinearLayout represents the contents of the screen  -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:backgroundTint="@color/black">
 
         <!-- The ActionBar displayed at the top -->
         <include
+            android:id="@+id/toolbar"
             layout="@layout/timeline_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:id="@+id/llToPost"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/border"
-            android:layout_below="@+id/toolbar"
-            >
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar">
 
-            <ImageView
-                android:id="@+id/ivProfileImage"
-                android:src="@drawable/ic_launcher_foreground"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
 
-                />
+                >
 
-            <TextView
-                android:id="@+id/tvToPost"
-                android:hint="@string/what_s_on_your_mind"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textSize="20dp"
 
-                />
 
-        </LinearLayout>
+                <include
+                    android:id="@+id/example_post"
+
+                    layout="@layout/timeline_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:background="@android:color/darker_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <include
+                    android:id="@+id/example_post"
+
+                    layout="@layout/timeline_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabToPost"

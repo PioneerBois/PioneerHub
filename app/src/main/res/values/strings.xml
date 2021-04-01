@@ -12,19 +12,12 @@
     <string name="post">Post</string>
 
 
-    <string-array name="channels">
-        <item>Student Feed</item>
-        <item>Buy &amp; Sell</item>
-        <item>Lost &amp; Found</item>
-        <item>Housing</item>
-        <item>News</item>
-        <item>Ride Sharing</item>
-    </string-array>
-
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="lost_and_found"><![CDATA[Lost & Found]]></string>
+    <string name="lost_and_found">Lost &amp; Found</string>
     <string name="housing">Housing</string>
     <string name="ride_sharing">Ride Sharing</string>
     <string name="news">News</string>
+    <string name="example_post_desc">This is a cool app. Can\'t wait to tell my friends about this. It\'s free and I can socialize with others here at CSEUB. Tell others to join now!!</string>
+    <string name="like">Like</string>
 </resources>
