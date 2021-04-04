@@ -26,14 +26,14 @@ PioneerHub is a social platform that connects the CSUEB community together. Pion
 
 **Required Must-have Stories**
 
-* Users are able to register for an account
-* Users are able to login
-* Users are able to create a post
-* Users are able to view a live feed
-* Users are able to like a post
-* Users are able to comment to a post
-* Users are able to customize their profile
-* Users are able to access a resource hub to know about the different student services CSUEB provides
+* []Users are able to register for an account
+* []Users are able to login
+* []Users are able to create a post
+* []Users are able to view a live feed
+* []Users are able to like a post
+* []Users are able to comment to a post
+* []Users are able to customize their profile
+* []Users are able to access a resource hub to know about the different student services CSUEB provides
 * ...
 
 **Optional Nice-to-have Stories**
@@ -51,7 +51,7 @@ PioneerHub is a social platform that connects the CSUEB community together. Pion
 * Creation
    * Users are able to create a post
    * Users are able to comment to a post
-* Stream 
+* Stream
    * Users are able to view a live feed
    * Users are able to like a post
    * Users are able to access a resource hub to know about the different student services CSUEB provides
@@ -117,3 +117,16 @@ Wireframe for resources, stream, profile, create post and Campus map
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
     <img src="https://imgur.com/fHup2br.jpeg" width=600>
+
+### Sprint 1
+* [X] Created several layouts for different pages
+* [X] Created a parse project to store different users and posts
+* [] Created API endpoints
+* [*] Created fragments that support different pages
+* [*] Created an intuitive navigation column for differnt channel
+
+### Images from sprint 1
+<img src="https://i.imgur.com/0n2ZBE8.gif" width=600>
+<img src="https://i.imgur.com/fvj0QzX.gif" width=600>
+<img src="https://i.imgur.com/4Wp8CpU.gif" width=600>
+
