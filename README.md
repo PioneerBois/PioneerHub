@@ -121,9 +121,9 @@ Wireframe for resources, stream, profile, create post and Campus map
 ### Sprint 1
 * [X] Created several layouts for different pages
 * [X] Created a parse project to store different users and posts
-* [] Created API endpoints
-* [*] Created fragments that support different pages
-* [*] Created an intuitive navigation column for differnt channel
+* [ ] Created API endpoints
+* [X] Created fragments that support different pages
+* [X] Created an intuitive navigation column for differnt channel
 
 ### Images from sprint 1
 <img src="https://i.imgur.com/0n2ZBE8.gif" width=600>
