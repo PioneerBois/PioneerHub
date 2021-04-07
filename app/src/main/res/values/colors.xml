@@ -11,4 +11,13 @@
     <color name="pi_red">#C1121F</color>
     <color name="pi_black">#011627</color>
     <color name="pi_white">#FAF9F9</color>
+
+
+    <color name="colorPrimary">#C1121F</color>
+    <color name="colorPrimaryVariant">#011627</color>
+    <color name="colorOnPrimary">#FAF9F9</color>
+    <!-- Secondary brand color. -->
+    <color name="colorSecondary">#FFBB86FC</color>
+    <color name="colorSecondaryVariant">#FF3700B3</color>
+    <color name="colorOnSecondary">#FF000000</color>
 </resources>

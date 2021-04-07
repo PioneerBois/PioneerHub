@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.PostFragment">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        tools:context=".fragments.PostFragment">
+
+        <RelativeLayout
+            android:id="@+id/rvProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_launcher_foreground"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/ivProfileImage"
+                android:text="Sushma Nayak"
+                tools:hint="Sushma Nayak"/>
+
+            <TextView
+                android:id="@+id/tvScreenName"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/ivProfileImage"
+                tools:hint="'@'sushmatn"
+                android:text="'@'sushmatn"/>
+
+            <Button
+
+                android:id="@+id/buttonCancelPost"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_baseline_cancel_24"
+                android:cropToPadding="true"
+
+                />
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/llPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/rvProfile">
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="@string/what_s_on_your_mind"
+
+                />
+            <EditText
+                android:id="@+id/etPostDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDescription"
+                android:ems="10"
+                android:layout_marginTop="10dp"
+                android:gravity="start|top"
+                android:hint="@string/what_s_on_your_mind"
+                android:inputType="textMultiLine"
+                android:minLines="5"
+                android:maxLength="280"
+                android:padding="10dp"
+                android:background="@drawable/full_border"
+                />
+
+            <Button
+                android:id="@+id/btnResetPost"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_baseline_refresh_24"
+                />
+
+            <RelativeLayout
+                android:id="@+id/rlImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_below="@+id/etPostDescription">
+
+                <ImageView
+                    android:id="@+id/ivPostImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    />
+
+                <Button
+                    android:id="@+id/btnCancelImage"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/ic_baseline_cancel_24"
+                    android:cropToPadding="true"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/bottomOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llPost"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/full_border">
+
+            <Button
+                android:id="@+id/btnTakePhoto"
+                android:layout_alignParentStart="true"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_baseline_add_a_photo_24"
+
+                />
+
+            <Button
+                android:id="@+id/btnChoosePhoto"
+                android:layout_toRightOf="@+id/btnTakePhoto"
+                android:layout_marginLeft="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_baseline_add_photo_alternate_24"
+
+                />
+
+
+
+
+            <TextView
+                android:id="@+id/border"
+                android:layout_toLeftOf="@+id/btnComposePost"
+                android:background="@color/black"
+                android:layout_width="1dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="40dp"/>
+            <Button
+                android:id="@+id/btnComposePost"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_baseline_done_24"
+                />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>
