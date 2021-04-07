@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
                         fragment = new ResourceFragment();
                         break;
                     case R.id.action_timeline:
-                        fragment = new TimelineFragment(getString(R.string.student_feed));
-                        break;
+                        timeLineFragment = new TimelineFragment(getString(R.string.student_feed));
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, timeLineFragment).commit();
+                        return true;
                     case R.id.action_profile:
                         fragment = new ProfileFragment();
                         break;

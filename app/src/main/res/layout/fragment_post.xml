@@ -93,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvDescription"
                 android:ems="10"
+                android:layout_marginTop="10dp"
                 android:gravity="start|top"
                 android:hint="@string/what_s_on_your_mind"
                 android:inputType="textMultiLine"

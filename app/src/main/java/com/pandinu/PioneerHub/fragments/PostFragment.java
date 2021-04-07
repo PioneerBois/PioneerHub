@@ -136,11 +136,14 @@ public class PostFragment extends Fragment {
             throw new RuntimeException(context.toString() + " " +
                     "must implement PostFragmentListener");
         }
+
+        getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         listener = null;
+        getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
     }
 }
