@@ -1,4 +1,4 @@
-package com.pandinu.PioneerHub;
+package com.pandinu.PioneerHub.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.pandinu.PioneerHub.R;
 
 
 public class TimelineFragment extends Fragment {

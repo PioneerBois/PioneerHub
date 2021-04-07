@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:id="@+id/tvRegisterTitle"
+        android:text="Register"
+        android:layout_marginTop="50dp"
+        android:textSize="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/etFirstName"
+        android:drawableLeft="@drawable/ic_baseline_person_red_24"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/first_name"
+        android:layout_below="@+id/tvRegisterTitle"/>
+
+    <EditText
+        android:id="@+id/etLastName"
+        android:drawableLeft="@drawable/ic_baseline_person_red_24"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/last_name"
+        android:layout_below="@id/etFirstName"/>
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:drawableLeft="@drawable/ic_baseline_email_24"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/email"
+        android:layout_below="@id/etLastName"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:drawableLeft="@drawable/ic_baseline_lock_24"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/password"
+        android:layout_below="@id/etEmail"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/etReTypePassword"
+        android:drawableLeft="@drawable/ic_baseline_lock_24"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/re_type_password"
+        android:layout_below="@id/etPassword"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/register"
+        android:layout_below="@id/etReTypePassword"/>
+
+    <TextView
+        android:id="@+id/tvSignIn"
+        android:text="@string/already_have_an_account_sign_in"
+        android:layout_marginTop="50dp"
+        android:textSize="18dp"
+        android:layout_marginBottom="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

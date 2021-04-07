@@ -186,7 +186,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/ic_baseline_report_40" />
+            android:text="@string/vertical_ellipsis"
+            android:src="@drawable/ic_baseline_more_vert_24" />
 
 
 

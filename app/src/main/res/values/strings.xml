@@ -20,4 +20,21 @@
     <string name="news">News</string>
     <string name="example_post_desc">This is a cool app. Can\'t wait to tell my friends about this. It\'s free and I can socialize with others here at CSEUB. Tell others to join now!!</string>
     <string name="like">Like</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
+    <string name="email">Email</string>
+    <string name="dialog_message">The email or password you entered is incorrect.</string>
+    <string name="dialog_title">Login Failed</string>
+    <string name="dialog_try_again">Try again</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="re_type_password">Re-type Password</string>
+    <string name="already_have_an_account_sign_in">Already have an account? Sign in</string>
+    <string name="register">Register</string>
+    <string name="registration_dialog_title_failed">Registration Failed!</string>
+    <string name="register_dialog_message_failed">Missing fields or the passwords do not match</string>
+    <string name="vertical_ellipsis">&#8942;</string>
+
 </resources>
