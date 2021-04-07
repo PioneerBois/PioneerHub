@@ -26,6 +26,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/email"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        android:maxLength="30"
         android:layout_below="@+id/tvLoginTitle"/>
 
     <EditText
@@ -39,6 +42,9 @@
         android:layout_height="50dp"
         android:hint="@string/password"
         android:layout_below="@id/etEmail"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
+        android:maxLength="30"
         android:inputType="textPassword"/>
 
     <TextView

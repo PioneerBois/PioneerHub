@@ -26,6 +26,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/first_name"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        android:maxLength="30"
         android:layout_below="@+id/tvRegisterTitle"/>
 
     <EditText
@@ -38,6 +41,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/last_name"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        android:maxLength="30"
         android:layout_below="@id/etFirstName"/>
 
     <EditText
@@ -50,6 +56,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/email"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        android:maxLength="30"
         android:layout_below="@id/etLastName"/>
 
     <EditText
@@ -63,6 +72,9 @@
         android:layout_height="50dp"
         android:hint="@string/password"
         android:layout_below="@id/etEmail"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        android:maxLength="30"
         android:inputType="textPassword"/>
 
     <EditText
@@ -76,6 +88,9 @@
         android:layout_height="50dp"
         android:hint="@string/re_type_password"
         android:layout_below="@id/etPassword"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
+        android:maxLength="30"
         android:inputType="textPassword"/>
 
     <Button
