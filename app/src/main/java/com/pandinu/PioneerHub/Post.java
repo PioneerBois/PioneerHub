@@ -5,8 +5,12 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.util.Date;
+
 @ParseClassName("Post")
 public class Post extends ParseObject {
+
+    public static final String KEY_CREATEDAT="createdAt";
     public static final String KEY_OBJECTID = "objectId";
     public static final String KEY_USERID = "userId";
     public static final String KEY_IMAGE = "image";
@@ -14,6 +18,10 @@ public class Post extends ParseObject {
     public static final String KEY_LIKESCOUNT = "likesCount";
     public static final String KEY_COMMENTSCOUNT = "commentsCount";
     public static final String KEY_CHANNEL ="channel";
+
+    public Date getPostCreatedAt(){
+        return getCreatedAt();
+    }
 
     public String getPostObjectId(){return getObjectId();}
 
