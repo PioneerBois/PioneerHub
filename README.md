@@ -26,10 +26,10 @@ PioneerHub is a social platform that connects the CSUEB community together. Pion
 
 **Required Must-have Stories**
 
-* []Users are able to register for an account
-* []Users are able to login
-* []Users are able to create a post
-* []Users are able to view a live feed
+* [X]Users are able to register for an account
+* [X]Users are able to login
+* [X]Users are able to create a post
+* [X]Users are able to view a live feed
 * []Users are able to like a post
 * []Users are able to comment to a post
 * []Users are able to customize their profile
@@ -129,4 +129,18 @@ Wireframe for resources, stream, profile, create post and Campus map
 <img src="https://i.imgur.com/0n2ZBE8.gif" width=600>
 <img src="https://i.imgur.com/fvj0QzX.gif" width=600>
 <img src="https://i.imgur.com/4Wp8CpU.gif" width=600>
+
+
+### Sprint 2
+* [X] Created a login and register layout
+* [X] Connected the application to a backend server
+* [X] Implemented login functionality
+* [X] Users can not post messages to dedicated channels
+* [X] Created more project issues for next sprint
+
+### Images from sprint 2
+<img src="https://i.imgur.com/gqykq72.gif" width=600>
+<img src="https://i.imgur.com/1WDoqoZ.gif" width=600>
+<img src="https://i.imgur.com/c31D5rC.gif" width=600>
+<img src="https://i.imgur.com/Swg6vAP.gif" width=600>
 
