@@ -8,7 +8,7 @@
 
 ## Overview
 ### Description
-An Android Application that can be used to connect the students of CSUEB together. The app hosts a feed that displays a student feed and up-to-date information regarding many of the available student services. The userbase of the application is be divided amongst current/previous students, professors, staff and community members. Each role has features and sets of actions that they can perform based on their role. PioneerHub also can be used as a messaging platform to facilitate group activity and community efforts. Ultimately PioneerHub is here to provide a sense of community and unity to the CSUEB family. 
+PioneerHub is a social platform that connects the CSUEB community together. PioneerHub is your go-to for reaching out to not only your classmates but also your department peers. Features include feed that displays student post, Groups based on shared topics, direct messaging, up-to-date information regarding many of the available student services. PioneerHub is here to provide a sense of community and unity to the CSUEB family.
 
 
 ### App Evaluation
@@ -26,14 +26,14 @@ An Android Application that can be used to connect the students of CSUEB togethe
 
 **Required Must-have Stories**
 
-* Users are able to register for an account
-* Users are able to login
-* Users are able to create a post
-* Users are able to view a live feed
-* Users are able to like a post
-* Users are able to comment to a post
-* Users are able to customize their profile
-* Users are able to access a resource hub to know about the different student services CSUEB provides
+* [X]Users are able to register for an account
+* [X]Users are able to login
+* [X]Users are able to create a post
+* [X]Users are able to view a live feed
+* []Users are able to like a post
+* []Users are able to comment to a post
+* []Users are able to customize their profile
+* []Users are able to access a resource hub to know about the different student services CSUEB provides
 * ...
 
 **Optional Nice-to-have Stories**
@@ -51,7 +51,7 @@ An Android Application that can be used to connect the students of CSUEB togethe
 * Creation
    * Users are able to create a post
    * Users are able to comment to a post
-* Stream 
+* Stream
    * Users are able to view a live feed
    * Users are able to like a post
    * Users are able to access a resource hub to know about the different student services CSUEB provides
@@ -64,9 +64,7 @@ An Android Application that can be used to connect the students of CSUEB togethe
 
 **Tab Navigation** (Tab to Screen)
 
-* Register
-* Login
-* Creation
+* Campus Resources
 * Stream
 * Profile
 * Map
@@ -87,18 +85,62 @@ An Android Application that can be used to connect the students of CSUEB togethe
     * Stream
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+WireFrames for Login, Register and forgotten password
+
+<img src="https://i.imgur.com/lPKoBHA.jpeg" width=600>
+
+### Possible color schemes
+* Red: C1121F
+* Black: 011627
+* White: FAF9F9
+
+Wireframe for resources, stream, profile, create post and Campus map
+<img src="https://imgur.com/9JHkLc0.jpeg" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 
 ### [BONUS] Interactive Prototype
 
-## Schema 
-[This section will be completed in Unit 9]
+## Schema
 ### Models
 [Add table of models]
+<img src="https://imgur.com/fe3NjeE.jpeg" width=600>
+
+<img src="https://imgur.com/UMWTAIH.jpeg" width=600>
+
+<img src="https://imgur.com/Ktjuf6o.jpeg" width=600>
+
 ### Networking
 - [Add list of network requests by screen ]
+    <img src="https://imgur.com/irftWUh.jpeg" width=600>
+    <img src="https://imgur.com/W8aCT4h.jpeg" width=600>
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
+    <img src="https://imgur.com/fHup2br.jpeg" width=600>
+
+### Sprint 1
+* [X] Created several layouts for different pages
+* [X] Created a parse project to store different users and posts
+* [ ] Created API endpoints
+* [X] Created fragments that support different pages
+* [X] Created an intuitive navigation column for differnt channel
+
+### Images from sprint 1
+<img src="https://i.imgur.com/0n2ZBE8.gif" width=300>
+<img src="https://i.imgur.com/fvj0QzX.gif" width=300>
+<img src="https://i.imgur.com/4Wp8CpU.gif" width=300>
+
+
+### Sprint 2
+* [X] Created a login and register layout
+* [X] Connected the application to a backend server
+* [X] Implemented login functionality
+* [X] Users can not post messages to dedicated channels
+* [X] Created more project issues for next sprint
+
+### Images from sprint 2
+<img src="https://i.imgur.com/gqykq72.gif" width=300>
+<img src="https://i.imgur.com/1WDoqoZ.gif" width=300>
+<img src="https://i.imgur.com/c31D5rC.gif" width=300>
+<img src="https://i.imgur.com/Swg6vAP.gif" width=300>
+
