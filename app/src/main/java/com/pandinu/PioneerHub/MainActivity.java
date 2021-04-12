@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.pandinu.PioneerHub.fragments.LibraryFragment;
 import com.pandinu.PioneerHub.fragments.MapFragment;
 import com.pandinu.PioneerHub.fragments.PostFragment;
 import com.pandinu.PioneerHub.fragments.ProfileFragment;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
                 Fragment fragment = null;
                 switch (item.getItemId()) {
                     case R.id.action_resources:
-                        fragment = new ResourceFragment();
+                        fragment = new LibraryFragment();
                         break;
                     case R.id.action_timeline:
                         timeLineFragment = new TimelineFragment(getString(R.string.student_feed));
