@@ -126,9 +126,9 @@ Wireframe for resources, stream, profile, create post and Campus map
 * [X] Created an intuitive navigation column for differnt channel
 
 ### Images from sprint 1
-<img src="https://i.imgur.com/0n2ZBE8.gif" width=600>
-<img src="https://i.imgur.com/fvj0QzX.gif" width=600>
-<img src="https://i.imgur.com/4Wp8CpU.gif" width=600>
+<img src="https://i.imgur.com/0n2ZBE8.gif" width=300>
+<img src="https://i.imgur.com/fvj0QzX.gif" width=300>
+<img src="https://i.imgur.com/4Wp8CpU.gif" width=300>
 
 
 ### Sprint 2
@@ -139,8 +139,8 @@ Wireframe for resources, stream, profile, create post and Campus map
 * [X] Created more project issues for next sprint
 
 ### Images from sprint 2
-<img src="https://i.imgur.com/gqykq72.gif" width=600>
-<img src="https://i.imgur.com/1WDoqoZ.gif" width=600>
-<img src="https://i.imgur.com/c31D5rC.gif" width=600>
-<img src="https://i.imgur.com/Swg6vAP.gif" width=600>
+<img src="https://i.imgur.com/gqykq72.gif" width=300>
+<img src="https://i.imgur.com/1WDoqoZ.gif" width=300>
+<img src="https://i.imgur.com/c31D5rC.gif" width=300>
+<img src="https://i.imgur.com/Swg6vAP.gif" width=300>
 
