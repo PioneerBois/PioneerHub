@@ -20,4 +20,5 @@
     <color name="colorSecondary">#FFBB86FC</color>
     <color name="colorSecondaryVariant">#FF3700B3</color>
     <color name="colorOnSecondary">#FF000000</color>
+    <color name="light_grey">#d3d3d3</color>
 </resources>

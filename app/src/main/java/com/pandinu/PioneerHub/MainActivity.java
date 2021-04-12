@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationMenu;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
                     case R.id.action_timeline:
                         timeLineFragment = new TimelineFragment(getString(R.string.student_feed));
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, timeLineFragment).commit();
+                        //timeLineFragment.queryPost();
                         return true;
                     case R.id.action_profile:
                         fragment = new ProfileFragment();
@@ -76,12 +78,13 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
     public void toPostSent(String channel) {
         FragmentTransaction toPostTransaction = getSupportFragmentManager().beginTransaction();
         PostFragment fragment = PostFragment.newInstance(channel);
-        toPostTransaction.replace(R.id.container, fragment);
+        toPostTransaction.replace(R.id.container, fragment).addToBackStack("null");
         toPostTransaction.commit();
     }
 
     @Override
     public void cancelPost(String channel) {
+        getSupportFragmentManager().popBackStack();
         FragmentTransaction cancelPost = getSupportFragmentManager().beginTransaction();
         cancelPost.replace(R.id.container, timeLineFragment);
         cancelPost.commit();
@@ -89,11 +92,26 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
 
     @Override
     public void successfulPost(String channel) {
+        getSupportFragmentManager().popBackStack();
         FragmentTransaction successfulPost = getSupportFragmentManager().beginTransaction();
         //TimelineFragment fragment = new TimelineFragment(channel);
         successfulPost.replace(R.id.container, timeLineFragment);
         successfulPost.commit();
-        timeLineFragment.queryPost(channel);
+        //timeLineFragment.queryPost(channel);
         //timeLineFragment.setToolbarTitle();
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        Log.i("count", String.valueOf(count));
+        if (count == 0) {
+            super.onBackPressed();
+
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 }
