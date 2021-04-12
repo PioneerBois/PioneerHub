@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pandinu.PioneerHub.fragments.MapFragment;
 import com.pandinu.PioneerHub.fragments.PostFragment;
@@ -46,7 +45,13 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
                         //timeLineFragment.queryPost();
                         return true;
                     case R.id.action_profile:
-                        fragment = new ProfileFragment();
+                        fragment = ProfileFragment.newInstance(
+                                "Test Test",
+                                "this is a test",
+                                "Department",
+                                "test",
+                                "test"
+                                );
                         break;
                     default:
                         fragment = new MapFragment();
