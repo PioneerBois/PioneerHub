@@ -193,6 +193,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             query.getInBackground(postObjectId, new GetCallback<Post>() {
                 @Override
                 public void done(Post post, ParseException e) {
+                    if(e!=null){
+                        Log.e(TAG, "Issue with querying updated post" , e);
+                        return;
+                    }
                     posts.set(position, post);
                     notifyItemChanged(position);
                 }
@@ -219,6 +223,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
                         post.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
+
+                                if(e!=null){
+                                    Log.e(TAG, "Issue with removing userId to likesArray", e);
+                                }
+
                                 queryAndInsertUpdatedPost(position, postObjectId);
                             }
                         });
@@ -227,6 +236,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
                         post.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
+                                if(e!=null){
+                                    Log.e(TAG, "Issue with adding userId to likesArray", e);
+                                }
                                 queryAndInsertUpdatedPost(position, postObjectId);
                             }
                         });
