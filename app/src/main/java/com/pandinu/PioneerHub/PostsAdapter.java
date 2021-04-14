@@ -126,7 +126,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
         private void likes(Post post, int position) {
 
-            int likesCount = post.getLikesArray().length();
+            int likesCount = post.getLikesCount().intValue();
             displayLikes(likesCount);
             boolean userLiked = displayThumbsUp(post);
             configureLikeButton(post, userLiked, position);
@@ -220,6 +220,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
                     if(toRemoveOrAddId.equals("removeUserId")){
                         post.removeAll(Post.KEY_LIKESARRAY, Arrays.asList(currentUserId));
+                        post.increment(Post.KEY_LIKESCOUNT, -1);
                         post.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
@@ -233,6 +234,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
                         });
                     }else{
                         post.addAll(Post.KEY_LIKESARRAY, Arrays.asList(currentUserId));
+                        post.increment(Post.KEY_LIKESCOUNT, 1);
                         post.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
