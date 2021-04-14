@@ -13,11 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
@@ -25,6 +31,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     private static final String TAG = "PostsAdapter";
     private Context context;
     private List<Post> posts;
+    private boolean userLiked = false;
 
     public PostsAdapter(Context context, List<Post> posts){
         this.context = context;
@@ -41,7 +48,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
-        holder.bind(post);
+        holder.bind(post,position);
 
     }
 
@@ -64,6 +71,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         private TextView tvLikeText;
         private TextView tvCommentText;
         private ImageView ivOptions;
+        private ImageView ivLikeIcon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,31 +87,30 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             tvLikeText = itemView.findViewById(R.id.tvLikeText);
             tvCommentText = itemView.findViewById(R.id.tvCommentNumber);
             ivOptions = itemView.findViewById(R.id.ivOptions);
+            ivLikeIcon = itemView.findViewById(R.id.ivLikeIcon);
         }
 
-        public void bind(Post post) {
+        public void bind(Post post, int position) {
             //Top part of the post
                 //Grab the profile data and update the ivProfileImage and tvName and Date;
                 //Update channelIcon, and channelName
                 //Post Description and check if theire is a postImage
-                //Check to see if there are likes and comments > 0
+                //display the likes and comments
+            //Bottom of the post
+                //Display if user liked a post and display that the post could be commented at
 
             displayProfile(post);
             displayChannelInfo(post);
             displayPostContent(post);
-            displayLikesComemnts(post);
+            likes(post, position);
+            displayComments(post);
 
         }
 
-        private void displayLikesComemnts(Post post) {
-            int likesCount = post.getLikesCount().intValue();
-            int commentsCount = post.getCommentsCount().intValue();
-            if(likesCount > 0){
-                tvLikesNumber.setText(likesCount + ": " + "likes");
-            }else{
-                tvLikesNumber.setVisibility(View.GONE);
-            }
 
+
+        private void displayComments(Post post) {
+            int commentsCount = post.getCommentsCount().intValue();
             if(commentsCount > 0){
                 tvCommentText.setText(commentsCount + ": " + "comments");
             }else{
@@ -111,11 +118,133 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             }
         }
 
+         /*Likes function
+            handles the number of likes to be shown
+            handles what thumbs up to display
+            sets up the likes icon clicklistener updates which user likes in Parse and
+            updates the new post in the position*/
+
+        private void likes(Post post, int position) {
+
+            int likesCount = post.getLikesArray().length();
+            displayLikes(likesCount);
+            boolean userLiked = displayThumbsUp(post);
+            configureLikeButton(post, userLiked, position);
+
+        }
+
+        private void configureLikeButton(Post post, boolean userLiked, int position) {
+            ivLikeIcon.setOnClickListener(new View.OnClickListener() {
+                //boolean finalUserliked = finalUserLiked;
+                @Override
+                public void onClick(View v) {
+                    String postObjectId = post.getPostObjectId();
+
+                    if(userLiked){
+                        updatePost("removeUserId", postObjectId, position);
+                    }else{
+                        updatePost("addUserId", postObjectId, position);
+                    }
+                }
+            });
+        }
+
+        private boolean displayThumbsUp(Post post) {
+            String currentUserId = ParseUser.getCurrentUser().getObjectId();
+
+            boolean userLiked = false;
+            for(int i = 0; i < post.getLikesArray().length(); i++) {
+
+                String userId = post.getLikesArray().optString(i);
+                if(userId.equals(currentUserId)){
+                    userLiked = true;
+                    //ParseUser.getCurrentUser();
+                    break;
+                }
+            }
+
+            if(userLiked){
+                ivLikeIcon.setImageResource(R.drawable.ic_baseline_thumb_up_40);
+            }else{
+                ivLikeIcon.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_40);
+            }
+
+            return userLiked;
+        }
+
+        private void displayLikes(int likesCount) {
+            if(likesCount > 0){
+                if(likesCount == 1){
+                    tvLikesNumber.setText(likesCount + " " + "like");
+                }else{
+                    tvLikesNumber.setText(likesCount + " " + "likes");
+                }
+
+                tvLikesNumber.setVisibility(View.VISIBLE);
+
+            }else{
+                tvLikesNumber.setVisibility(View.GONE);
+            }
+        }
+
+        //Set the new post at the position and notify the adapter the item has changed
+        private void queryAndInsertUpdatedPost(int position, String postObjectId) {
+            ParseQuery<Post> query = ParseQuery.getQuery("Post");
+            query.getInBackground(postObjectId, new GetCallback<Post>() {
+                @Override
+                public void done(Post post, ParseException e) {
+                    posts.set(position, post);
+                    notifyItemChanged(position);
+                }
+            });
+        }
+
+        //Update the likesArray and save the update in the background
+        //Call queryAndInsertUpdatedPost to query insert the newly updated post to the position
+        //in the recyclerview
+
+        private void updatePost(String toRemoveOrAddId, String postObjectId, int position) {
+            String currentUserId = ParseUser.getCurrentUser().getObjectId();
+            ParseQuery<Post> query = ParseQuery.getQuery("Post");
+            query.getInBackground(postObjectId, new GetCallback<Post>() {
+                @Override
+                public void done(Post post, ParseException e) {
+                    if(e!= null){
+                        Log.e(TAG, "Issue with updating post", e);
+                        return;
+                    }
+
+                    if(toRemoveOrAddId.equals("removeUserId")){
+                        post.removeAll(Post.KEY_LIKESARRAY, Arrays.asList(currentUserId));
+                        post.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                queryAndInsertUpdatedPost(position, postObjectId);
+                            }
+                        });
+                    }else{
+                        post.addAll(Post.KEY_LIKESARRAY, Arrays.asList(currentUserId));
+                        post.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                queryAndInsertUpdatedPost(position, postObjectId);
+                            }
+                        });
+
+                    }
+
+                }
+            });
+
+        }
+
+
         private void displayPostContent(Post post) {
             tvPostDescription.setText(post.getDescription());
             ParseFile image = post.getImg();
             if(image != null){
                 Glide.with(context).load(image.getUrl()).into(ivPostImage);
+                ivPostImage.setVisibility(View.VISIBLE);
             }else{
                 ivPostImage.setVisibility(View.GONE);
             }

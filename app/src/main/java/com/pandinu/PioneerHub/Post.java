@@ -5,6 +5,8 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+
 import java.util.Date;
 
 @ParseClassName("Post")
@@ -18,6 +20,12 @@ public class Post extends ParseObject {
     public static final String KEY_LIKESCOUNT = "likesCount";
     public static final String KEY_COMMENTSCOUNT = "commentsCount";
     public static final String KEY_CHANNEL ="channel";
+    public static final String KEY_LIKESARRAY = "likesArray";
+
+
+    public JSONArray getLikesArray(){ return getJSONArray(KEY_LIKESARRAY);}
+
+
 
     public Date getPostCreatedAt(){
         return getCreatedAt();
