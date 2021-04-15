@@ -289,7 +289,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
         private void displayProfile(Post post) {
             ParseQuery<Profile> query = ParseQuery.getQuery("Profile");
-            query.whereEqualTo("userId", ParseUser.getCurrentUser());
+            query.whereEqualTo("userId", post.getUserId());
             query.findInBackground(new FindCallback<Profile>() {
                 @Override
                 public void done(List<Profile> objects, ParseException e) {
