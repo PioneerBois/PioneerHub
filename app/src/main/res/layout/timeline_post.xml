@@ -85,7 +85,7 @@
             android:id="@+id/rlPostLikesComments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+
             android:layout_marginTop="10dp"
             android:layout_below="@id/ivPostImage">
 
@@ -95,9 +95,10 @@
                 android:id="@+id/tvlikesNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+               android:layout_marginLeft="10dp"
                 android:layout_marginTop="2dp"
                 android:text="8 likes"
+                android:layout_marginBottom="5dp"
                 />
 
             <TextView
@@ -106,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="2dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
                 android:text="3 comments"
                 />
 
@@ -133,10 +135,10 @@
 
             <ImageView
                 android:id="@+id/ivLikeIcon"
-                android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_baseline_thumb_up_off_alt_40"/>
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_baseline_thumb_up_off_alt_40" />
 
             <TextView
                 android:id="@+id/tvLikeText"
