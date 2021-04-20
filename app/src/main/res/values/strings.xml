@@ -41,4 +41,7 @@
     <string name="cover_image">Cover Image</string>
     <string name="profile_image">Profile Image</string>
     <string name="setting">Setting</string>
+
+    <string name="content_authority">com.codepath.fileprovider</string>
+
 </resources>

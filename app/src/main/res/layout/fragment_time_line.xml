@@ -9,12 +9,15 @@
 
     <!-- This LinearLayout represents the contents of the screen  -->
     <RelativeLayout
+        android:id="@+id/rlContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/light_grey"
 
         >
+
+
 
         <!-- The ActionBar displayed at the top -->
         <include
@@ -23,11 +26,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPosts"
             android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
 
 
 
@@ -43,6 +49,18 @@
             android:background="@drawable/ic_baseline_add_24"
             android:src="@drawable/ic_baseline_add_24"
             />
+
+        <FrameLayout
+            android:id="@+id/child_fragment_container"
+            android:visibility="gone"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:elevation="20dp"
+            android:background="@color/colorOnPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
     </RelativeLayout>
     <!-- The navigation drawer that comes from the left -->
     <!-- Note that `android:layout_gravity` needs to be set to 'start' -->
@@ -54,4 +72,6 @@
         android:layout_gravity="start"
         android:background="@android:color/white"
         app:menu="@menu/timeline_drawer_view" />
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

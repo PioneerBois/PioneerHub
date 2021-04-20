@@ -20,6 +20,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
     //private RegisterFragment registerFragment;
     //private LoginFragment loginFragment;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

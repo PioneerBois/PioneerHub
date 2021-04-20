@@ -1,13 +1,17 @@
 package com.pandinu.PioneerHub;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pandinu.PioneerHub.fragments.LibraryFragment;
@@ -17,19 +21,26 @@ import com.pandinu.PioneerHub.fragments.ProfileFragment;
 import com.pandinu.PioneerHub.fragments.ResourceFragment;
 import com.pandinu.PioneerHub.fragments.TimelineFragment;
 
-public class MainActivity extends AppCompatActivity implements TimelineFragment.TimeLineFragmentListener, PostFragment.PostFragmentListener{
+public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     //private FragmentTransaction ft;
     private TimelineFragment timeLineFragment;
+
+    private LibraryFragment libraryFragment;
     //private PostFragment postFragment;
 
     private BottomNavigationView bottomNavigationView;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String channel  = getString(R.string.student_feed);
+        timeLineFragment = TimelineFragment.newInstance(channel);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -38,10 +49,12 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
                 Fragment fragment = null;
                 switch (item.getItemId()) {
                     case R.id.action_resources:
-                        fragment = new LibraryFragment();
+                        fragment = libraryFragment.newInstance();
                         break;
                     case R.id.action_timeline:
-                        timeLineFragment = new TimelineFragment(getString(R.string.student_feed));
+                        //String channel  = getString(R.string.student_feed);
+                        //timeLineFragment = TimelineFragment.newInstance(channel);
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, timeLineFragment).commit();
                         //timeLineFragment.queryPost();
                         return true;
@@ -55,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
                                 );
                         break;
                     default:
-                        fragment = new MapFragment();
+                        fragment = MapFragment.newInstance();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
@@ -63,61 +76,36 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
             }
         });
 
-        bottomNavigationView.setSelectedItemId(R.id.action_timeline);
+        //bottomNavigationView.setSelectedItemId(R.id.action_timeline);
 
-
-
-        /*timeLineFragment = new TimelineFragment(getString(R.string.student_feed));
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, timeLineFragment);
-        ft.commit();
-        timeLineFragment.queryPost(getString(R.string.student_feed));*/
-
-
-
-
-
-
-    }
-
-    @Override
-    public void toPostSent(String channel) {
-        FragmentTransaction toPostTransaction = getSupportFragmentManager().beginTransaction();
-        PostFragment fragment = PostFragment.newInstance(channel);
-        toPostTransaction.replace(R.id.container, fragment).addToBackStack("null");
-        toPostTransaction.commit();
-    }
-
-    @Override
-    public void cancelPost(String channel) {
-        getSupportFragmentManager().popBackStack();
-        FragmentTransaction cancelPost = getSupportFragmentManager().beginTransaction();
-        cancelPost.replace(R.id.container, timeLineFragment);
-        cancelPost.commit();
-    }
-
-    @Override
-    public void successfulPost(String channel) {
-        getSupportFragmentManager().popBackStack();
-        FragmentTransaction successfulPost = getSupportFragmentManager().beginTransaction();
-        //TimelineFragment fragment = new TimelineFragment(channel);
-        successfulPost.replace(R.id.container, timeLineFragment);
-        successfulPost.commit();
-        //timeLineFragment.queryPost(channel);
-        //timeLineFragment.setToolbarTitle();
+        if(savedInstanceState ==null) {
+            bottomNavigationView.setSelectedItemId(R.id.action_timeline);
+        }
     }
 
     @Override
     public void onBackPressed() {
-        int count = getSupportFragmentManager().getBackStackEntryCount();
 
-        Log.i("count", String.valueOf(count));
-        if (count == 0) {
-            super.onBackPressed();
-
-            //additional code
-        } else {
-            getSupportFragmentManager().popBackStack();
+        FragmentManager fm = getSupportFragmentManager();
+        for (Fragment frag : fm.getFragments()) {
+            if (frag.isVisible()) {
+                FragmentManager childFm = frag.getChildFragmentManager();
+                if (childFm.getBackStackEntryCount() > 0) {
+                    childFm.popBackStack();
+                    if(frag instanceof TimelineFragment){
+                        int hidChildFrameLayout = timeLineFragment.hideChildFrameLayout();
+                        if(hidChildFrameLayout == 0){
+                            finish();
+                        }
+                    }
+                    //finish();
+                    return;
+                }
+            }
         }
+
+        super.onBackPressed();
+
+
     }
 }

@@ -107,8 +107,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
         }
 
-
-
+        //Display the comments for now
         private void displayComments(Post post) {
             int commentsCount = post.getCommentsCount().intValue();
             if(commentsCount > 0){
@@ -133,6 +132,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
         }
 
+        //If the user have liked the post and clicks the like button agian, then the user has unliked the post
+        //Opposite case and has now liked the post
         private void configureLikeButton(Post post, boolean userLiked, int position) {
             ivLikeIcon.setOnClickListener(new View.OnClickListener() {
                 //boolean finalUserliked = finalUserLiked;
@@ -148,6 +149,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
                 }
             });
         }
+
+        //Check to see if the user has liked the post then display a black thumps up if they did or
+        //a white thumbs up if not
 
         private boolean displayThumbsUp(Post post) {
             String currentUserId = ParseUser.getCurrentUser().getObjectId();
@@ -171,6 +175,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
             return userLiked;
         }
+
+        //Display likes for each post
 
         private void displayLikes(int likesCount) {
             if(likesCount > 0){
@@ -252,6 +258,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
         }
 
+        //Display the post content
+            //If their is no image don't show
 
         private void displayPostContent(Post post) {
             tvPostDescription.setText(post.getDescription());
@@ -264,12 +272,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             }
         }
 
+        //Display the channel name for the post
         private void displayChannelInfo(Post post) {
             String channel = post.getChannel();
             tvChannelName.setText(channel);
             updateChannelIcon(channel);
         }
 
+        //Display the channel icon
         private void updateChannelIcon(String channel) {
             if(context.getString(R.string.buy_and_sell).equals(channel)){
                 ivChannelIcon.setImageResource(R.drawable.ic_baseline_sell_24);
@@ -286,6 +296,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             }
 
         }
+
+        //query and display the profiles for the user who made the person
 
         private void displayProfile(Post post) {
             ParseQuery<Profile> query = ParseQuery.getQuery("Profile");
