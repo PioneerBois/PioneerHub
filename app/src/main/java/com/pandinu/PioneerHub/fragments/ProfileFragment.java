@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment {
 
     public ProfileFragment() {
         // Required empty public constructor
+        //setRetainInstance(true);
     }
 
     // TODO: Rename and change types and number of parameters

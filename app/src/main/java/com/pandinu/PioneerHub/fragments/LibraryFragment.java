@@ -31,6 +31,16 @@ public class LibraryFragment extends Fragment {
 
     public LibraryFragment() {
         // Required empty public constructor
+        //setRetainInstance(true);
+    }
+
+    public static LibraryFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        LibraryFragment fragment = new LibraryFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 

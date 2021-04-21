@@ -33,6 +33,16 @@ public class MapFragment extends Fragment {
 
     public MapFragment() {
         // Required empty public constructor
+        //setRetainInstance(true);
+    }
+
+    public static MapFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        MapFragment fragment = new MapFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
