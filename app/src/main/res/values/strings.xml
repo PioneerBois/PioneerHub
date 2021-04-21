@@ -11,7 +11,6 @@
     <string name="select_a_channel">Select a Channel</string>
     <string name="post">Post</string>
 
-
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="lost_and_found">Lost &amp; Found</string>
@@ -41,4 +40,12 @@
     <string name="cover_image">Cover Image</string>
     <string name="profile_image">Profile Image</string>
     <string name="setting">Setting</string>
+
+    <string name="google_maps_api_key">AIzaSyDK94lb5VSj4P5lSqqBe9Nnl281U1Ye3pk</string>
+    <string name="normal_map">Normal Map</string>
+    <string name="hybrid_map">Hybrid Map</string>
+    <string name="satellite_map">Normal Map</string>
+    <string name="terrain_map">Normal Map</string>
+
+
 </resources>
