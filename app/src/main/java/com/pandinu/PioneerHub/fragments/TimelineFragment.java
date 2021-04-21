@@ -38,6 +38,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -54,7 +55,7 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
     private FloatingActionButton fabToPost;
     private static final String ARG_CHANNEL = "";
     private String currentChannel = "";
-    private ArrayList<Post> allPosts;
+    private ArrayList<Object> allPosts;
     private RecyclerView rvPosts;
     private PostsAdapter adapter;
     private FrameLayout childFrameLayout;
@@ -164,9 +165,9 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
 
             rvPosts = v.findViewById(R.id.rvPosts);
 
-            allPosts = savedInstanceState.getParcelableArrayList(SAVED_RECYCLER_VIEW_DATASET_ID);
+            allPosts = (ArrayList<Object>) savedInstanceState.getSerializable(SAVED_RECYCLER_VIEW_DATASET_ID);
             //Log.i(TAG, "length of all Posts: " + String.valueOf(allPosts.size()));
-            adapter = new PostsAdapter(getContext(), allPosts);
+            adapter = new PostsAdapter(getContext(), allPosts, "Post");
             rvPosts.setAdapter(adapter);
             rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -190,7 +191,7 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
             postFragment = PostFragment.newInstance(currentChannel);
             allPosts = new ArrayList<>();
             rvPosts = v.findViewById(R.id.rvPosts);
-            adapter = new PostsAdapter(getContext(), allPosts);
+            adapter = new PostsAdapter(getContext(), allPosts, "Post");
             rvPosts.setAdapter(adapter);
             rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -378,6 +379,7 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
             query.whereEqualTo(Post.KEY_CHANNEL, currentChannel);
         }
         query.orderByDescending(Post.KEY_CREATEDAT);
+        query.setLimit(20);
 
         query.findInBackground(new FindCallback<Post>() {
             @Override
@@ -405,7 +407,9 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
     private void queryForNewPost(String channel) {
         Log.i(TAG, "queryForNewPost");
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.whereGreaterThan(Post.KEY_CREATEDAT, allPosts.get(0).getPostCreatedAt());
+
+        Post post = (Post) allPosts.get(0);
+        query.whereGreaterThan(Post.KEY_CREATEDAT, post.getPostCreatedAt());
         query.orderByDescending(Post.KEY_CREATEDAT);
         query.whereEqualTo(Post.KEY_CHANNEL, currentChannel);
         query.findInBackground(new FindCallback<Post>() {
@@ -445,7 +449,7 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
         outState.putParcelable(SAVED_RECYCLER_VIEW_STATUS_ID, mListState);
 
         //save recycler items
-        outState.putParcelableArrayList(SAVED_RECYCLER_VIEW_DATASET_ID, allPosts);
+        outState.putSerializable(SAVED_RECYCLER_VIEW_DATASET_ID,  allPosts);
 
         //save the channel
         outState.putString("channel", currentChannel);

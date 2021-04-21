@@ -404,8 +404,8 @@ public class PostFragment extends Fragment  {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("photoFile", photoFile);
                 bundle.putString("photoFileName", photoFileName);
-                PreviewImageFragment previewDialogFragment = PreviewImageFragment.newInstance(bundle);
-                previewDialogFragment.show(fm, "preview_image_dialog");
+                PreviewImageFragment previewImageFragment = PreviewImageFragment.newInstance(bundle);
+                previewImageFragment.show(fm, "preview_image_dialog");
             }
         });
     }

@@ -69,17 +69,19 @@ public class PreviewImageFragment extends DialogFragment {
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-        ivPreviewImage = v.findViewById(R.id.ivPreviewImage);
-        ivPreviewImage.setImageBitmap(takenImage);
-
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDialog().dismiss();
             }
         });
+
+        Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+        ivPreviewImage = v.findViewById(R.id.ivPreviewImage);
+        ivPreviewImage.setImageBitmap(takenImage);
+
+
+
 
         getDialog().setCanceledOnTouchOutside(true);
 

@@ -43,5 +43,6 @@
     <string name="setting">Setting</string>
 
     <string name="content_authority">com.codepath.fileprovider</string>
+    <string name="add_a_comment">Add a comment</string>
 
 </resources>
