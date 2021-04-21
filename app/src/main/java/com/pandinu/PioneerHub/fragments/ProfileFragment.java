@@ -36,7 +36,7 @@ public class ProfileFragment extends Fragment {
     private RecyclerView rvUserPosts;
     private PostsAdapter adapter;
 
-    private List<Post> userPosts;
+    private ArrayList<Object> userPosts;
 
     public static final String ARG_USER_ID = "USER_ID";
 
@@ -105,9 +105,9 @@ public class ProfileFragment extends Fragment {
         tvUserDepartment.setText(major);
 
 
-        userPosts = new ArrayList<Post>();
+        userPosts = new ArrayList<Object>();
         rvUserPosts = (RecyclerView)v.findViewById(R.id.rv_user_posts);
-        adapter = new PostsAdapter(getContext(), userPosts);
+        adapter = new PostsAdapter(getContext(), userPosts, "Post");
         rvUserPosts.setAdapter(adapter);
         rvUserPosts.setLayoutManager(new LinearLayoutManager(getContext()));
 
