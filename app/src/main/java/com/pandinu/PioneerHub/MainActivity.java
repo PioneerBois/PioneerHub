@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pandinu.PioneerHub.fragments.LibraryFragment;
@@ -16,6 +17,11 @@ import com.pandinu.PioneerHub.fragments.PostFragment;
 import com.pandinu.PioneerHub.fragments.ProfileFragment;
 import com.pandinu.PioneerHub.fragments.ResourceFragment;
 import com.pandinu.PioneerHub.fragments.TimelineFragment;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity implements TimelineFragment.TimeLineFragmentListener, PostFragment.PostFragmentListener{
 
@@ -46,13 +52,10 @@ public class MainActivity extends AppCompatActivity implements TimelineFragment.
                         //timeLineFragment.queryPost();
                         return true;
                     case R.id.action_profile:
-                        fragment = ProfileFragment.newInstance(
-                                "Test Test",
-                                "this is a test",
-                                "Department",
-                                "test",
-                                "test"
-                                );
+                        ParseUser user = ParseUser.getCurrentUser();
+                        Log.i("Test", user.getObjectId() + " : this is the user id");
+
+                        fragment = ProfileFragment.newInstance(user.getObjectId());
                         break;
                     default:
                         fragment = new MapFragment();
