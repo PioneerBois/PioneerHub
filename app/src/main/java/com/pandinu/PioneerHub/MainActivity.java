@@ -3,6 +3,7 @@ package com.pandinu.PioneerHub;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -93,9 +95,12 @@ public class MainActivity extends AppCompatActivity {
                 if (childFm.getBackStackEntryCount() > 0) {
                     childFm.popBackStack();
                     if(frag instanceof TimelineFragment){
-                        int hidChildFrameLayout = timeLineFragment.hideChildFrameLayout();
-                        if(hidChildFrameLayout == 0){
-                            finish();
+                        View view = frag.getView();
+                        if(view != null){
+                            FrameLayout childFrameLayout = view.findViewById(R.id.child_fragment_container);
+                            childFrameLayout.setVisibility(View.GONE);
+                            DrawerLayout mDrawer = (DrawerLayout) view.findViewById(R.id.drawer_layout);
+                            mDrawer.setDrawerLockMode( DrawerLayout.LOCK_MODE_UNLOCKED);
                         }
                     }
                     //finish();

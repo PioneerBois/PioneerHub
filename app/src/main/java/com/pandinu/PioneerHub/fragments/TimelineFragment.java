@@ -324,6 +324,7 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
         mDrawer.setDrawerLockMode( DrawerLayout.LOCK_MODE_UNLOCKED);
         currentChannel = channel;
         toolbar.setTitle(currentChannel);
+        postFragment = PostFragment.newInstance(channel);
 
 
         Log.i(TAG, "cancelPost");
@@ -340,8 +341,11 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
         getChildFragmentManager().popBackStack();
         hideChildFrameLayout();
         currentChannel = channel;
+        Log.i(TAG, channel);
         mDrawer.setDrawerLockMode( DrawerLayout.LOCK_MODE_UNLOCKED);
+        toolbar.setTitle(currentChannel);
         queryForNewPost(channel);
+        postFragment = PostFragment.newInstance(channel);
     }
 
 
@@ -420,6 +424,8 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
                 }
 
                 adapter.notifyDataSetChanged();
+                //rvPosts.smoothScrollToPosition(0);
+                rvPosts.scrollToPosition(0);
 
                //Log.i("TAG", "The post at position 0 description: " + allPosts.get(0).getDescription());
             }

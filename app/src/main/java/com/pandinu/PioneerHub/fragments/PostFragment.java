@@ -497,7 +497,9 @@ public class PostFragment extends Fragment  {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(rvImageLayout.getVisibility() == View.VISIBLE){
+
+
+        if(photoFile != null){
             Bundle bundle = new Bundle();
             bundle.putSerializable("photoFile", photoFile);
             bundle.putString("photoFileName", photoFileName);
