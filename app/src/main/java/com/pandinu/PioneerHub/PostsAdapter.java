@@ -5,20 +5,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.pandinu.PioneerHub.fragments.CommentsFragment;
-import com.pandinu.PioneerHub.fragments.PreviewImageFragment;
+import com.pandinu.PioneerHub.fragments.TimelineFragment;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -27,11 +26,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -39,8 +34,8 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static final String TAG = "PostsAdapter";
     private Context context;
     private List<Object> items;
-    private boolean userLiked = false;
     private String type;
+    private Fragment fragment;
 
     private final int POST = 0, COMMENTS = 1;
 
@@ -48,6 +43,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.context = context;
         this.items = items;
         this.type = type;
+        //this.fragment = fragment;
     }
 
     @NonNull
@@ -183,25 +179,23 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 public void onClick(View v) {
                     //String commentObjectId = comment.getCommentObjectId();
 
-                    if(userLiked){
+                    updateComment(userLiked, comment, position);
+
+                    /*if(userLiked){
                         updateComment("removeUserId", comment, position);
                     }else{
                         updateComment("addUserId", comment, position);
-                    }
+                    }*/
                 }
             });
 
         }
 
-        private void updateComment(String toRemoveOrAddId, Comments comment, int position) {
+        private void updateComment(boolean userLiked, Comments comment, int position) {
             String currentUserId = ParseUser.getCurrentUser().getObjectId();
             String commentObjectId = comment.getCommentObjectId();
-            ParseQuery<Comments> query = ParseQuery.getQuery("Commments");
 
-            query.whereEqualTo(Comments.KEY_OBJECTID, commentObjectId);
-            query.whereEqualTo(Comments.KEY_USERID, currentUserId);
-
-            if(toRemoveOrAddId.equals("removeUserId")){
+            if(userLiked){
                 comment.removeAll(Post.KEY_LIKESARRAY, Arrays.asList(currentUserId));
                 comment.increment(Post.KEY_LIKESCOUNT, -1);
                 comment.saveInBackground(new SaveCallback() {
@@ -365,12 +359,12 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             displayChannelInfo(post);
             displayPostContent(post);
             likes(post, position, type);
-            comments(post);
+            comments(post, position);
 
         }
 
         //Display the comments for now
-        private void comments(Post post) {
+        private void comments(Post post, int position) {
             int commentsCount = post.getCommentsCount().intValue();
             if(commentsCount > 0){
                 tvCommentText.setVisibility(View.VISIBLE);
@@ -387,11 +381,20 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 @Override
                 public void onClick(View v) {
                     FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
-                    CommentsFragment commentsFragment = CommentsFragment.newInstance(post);
+
+                    Fragment timeLineFragment = fm.findFragmentById(R.id.container);
+
+                    if(timeLineFragment != null){
+                        Log.i(TAG, "timeLineFragment is not null");
+                    }else{
+                        Log.i(TAG, "timelineFragment is null");
+                    }
+
+                    CommentsFragment commentsFragment = CommentsFragment.newInstance(post, position);
                     //commentsFragment.setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme);
                     //commentsFragment.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                     //commentsFragment.getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-
+                    commentsFragment.setTargetFragment( timeLineFragment,1);
                     commentsFragment.show(fm, "");
                     //PreviewImageFragment previewImageFragment = PreviewImageFragment.newInstance(bundle);
                 }
@@ -430,11 +433,12 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 public void onClick(View v) {
                    // String postObjectId = post.getPostObjectId();
 
-                    if(userLiked){
+                    updatePost(userLiked, post, position);
+                    /*if(userLiked){
                         updatePost("removeUserId", post, position);
                     }else{
                         updatePost("addUserId", post, position);
-                    }
+                    }*/
                 }
             });
         }
@@ -502,12 +506,11 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         //Call queryAndInsertUpdatedPost to query insert the newly updated post to the position
         //in the recyclerview
 
-        private void updatePost(String toRemoveOrAddId, Post post , int position) {
+        private void updatePost(boolean userLiked, Post post , int position) {
             String currentUserId = ParseUser.getCurrentUser().getObjectId();
-            ParseQuery<Post> query = ParseQuery.getQuery("Post");
             String postObjectId = post.getPostObjectId();
 
-                if(toRemoveOrAddId.equals("removeUserId")){
+                if(userLiked){
                     post.removeAll(Post.KEY_LIKESARRAY, Arrays.asList(currentUserId));
                     post.increment(Post.KEY_LIKESCOUNT, -1);
                     post.saveInBackground(new SaveCallback() {

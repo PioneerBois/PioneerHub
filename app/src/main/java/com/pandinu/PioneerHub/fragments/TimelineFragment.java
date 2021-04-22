@@ -34,15 +34,18 @@ import com.pandinu.PioneerHub.Post;
 import com.pandinu.PioneerHub.PostsAdapter;
 import com.pandinu.PioneerHub.R;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-public class TimelineFragment extends Fragment implements PostFragment.PostFragmentListener{
+public class TimelineFragment extends Fragment implements PostFragment.PostFragmentListener, CommentsFragment.CommentFragmentListener, Serializable {
     private static final String TAG = "TimeLineFragment";
     private static final String SAVED_RECYCLER_VIEW_DATASET_ID = "DATASET_ID";
     private static final String SAVED_RECYCLER_VIEW_STATUS_ID = "STATUS_ID";
@@ -304,8 +307,10 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
 
     private void insertNestedFragment() {
         //postFragment = PostFragment.newInstance(currentChannel);
+
+        //getChildFragmentManager().popBackStack();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.child_fragment_container, postFragment).addToBackStack("null").commit();
+        transaction.replace(R.id.child_fragment_container, postFragment).addToBackStack(null).commit();
 
         childFrameLayout.setVisibility(View.VISIBLE);
         mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -408,32 +413,39 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
         Log.i(TAG, "queryForNewPost");
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
-        Post post = (Post) allPosts.get(0);
-        query.whereGreaterThan(Post.KEY_CREATEDAT, post.getPostCreatedAt());
-        query.orderByDescending(Post.KEY_CREATEDAT);
-        query.whereEqualTo(Post.KEY_CHANNEL, currentChannel);
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if(e!=null){
-                    Log.i(TAG, "Issue with getting new Post", e);
-                    return;
+
+        if(allPosts.size() > 0) {
+            Post post = (Post) allPosts.get(0);
+            query.whereGreaterThan(Post.KEY_CREATEDAT, post.getPostCreatedAt());
+            query.orderByDescending(Post.KEY_CREATEDAT);
+            query.whereEqualTo(Post.KEY_CHANNEL, currentChannel);
+            query.findInBackground(new FindCallback<Post>() {
+                @Override
+                public void done(List<Post> posts, ParseException e) {
+                    if (e != null) {
+                        Log.i(TAG, "Issue with getting new Post", e);
+                        return;
+                    }
+
+
+                    //Log.i(TAG, "Getting back how many posts: " + String.valueOf(posts.size()));
+                    for (Post post : posts) {
+                        allPosts.add(0, post);
+                        //adapter.notifyItemChanged(0);
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    //rvPosts.smoothScrollToPosition(0);
+                    rvPosts.scrollToPosition(0);
+
+                    //Log.i("TAG", "The post at position 0 description: " + allPosts.get(0).getDescription());
                 }
+            });
+        }else{
 
 
-                //Log.i(TAG, "Getting back how many posts: " + String.valueOf(posts.size()));
-                for(Post post:  posts){
-                    allPosts.add(0, post);
-                    //adapter.notifyItemChanged(0);
-                }
-
-                adapter.notifyDataSetChanged();
-                //rvPosts.smoothScrollToPosition(0);
-                rvPosts.scrollToPosition(0);
-
-               //Log.i("TAG", "The post at position 0 description: " + allPosts.get(0).getDescription());
-            }
-        });
+            queryPost();
+        }
 
     }
 
@@ -444,12 +456,15 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
+
+
         mListState = rvPosts.getLayoutManager().onSaveInstanceState();
         //save recyclerview position
         outState.putParcelable(SAVED_RECYCLER_VIEW_STATUS_ID, mListState);
 
         //save recycler items
         outState.putSerializable(SAVED_RECYCLER_VIEW_DATASET_ID,  allPosts);
+
 
         //save the channel
         outState.putString("channel", currentChannel);
@@ -464,7 +479,50 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
             //getChildFragmentManager().putFragment(outState, "postFragment", postFragment);
             Log.i(TAG, "Post Fragment is not visible");
         }
+
+        //getChildFragmentManager().popBackStack();
     }
+
+    @Override
+    public void successfulComment(int timelinePostPosition) {
+        Log.i(TAG, "made a successful comment");
+
+        Post post = (Post) allPosts.get(timelinePostPosition);
+        post.increment(Post.KEY_COMMENTSCOUNT, 1);
+        String postObjectId = post.getPostObjectId();
+
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e!=null){
+                    Log.i(TAG,"isuse with updating post in background", e);
+                    return;
+                }
+
+
+
+                queryAndInsertUpdatedPost(timelinePostPosition, postObjectId);
+            }
+        });
+
+    }
+
+    //Set the new post at the position and notify the adapter the item has changed
+    private void queryAndInsertUpdatedPost(int position, String postObjectId) {
+        ParseQuery<Post> query = ParseQuery.getQuery("Post");
+        query.getInBackground(postObjectId, new GetCallback<Post>() {
+            @Override
+            public void done(Post post, ParseException e) {
+                if(e!=null){
+                    Log.e(TAG, "Issue with querying updated post" , e);
+                    return;
+                }
+                allPosts.set(position, post);
+                adapter.notifyItemChanged(position);
+            }
+        });
+    }
+
 
 
 }
