@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -382,19 +383,13 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 public void onClick(View v) {
                     FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
 
-                    Fragment timeLineFragment = fm.findFragmentById(R.id.container);
-
-                    if(timeLineFragment != null){
-                        Log.i(TAG, "timeLineFragment is not null");
-                    }else{
-                        Log.i(TAG, "timelineFragment is null");
-                    }
+                    Fragment fragment = fm.findFragmentById(R.id.container);
 
                     CommentsFragment commentsFragment = CommentsFragment.newInstance(post, position);
                     //commentsFragment.setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme);
                     //commentsFragment.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                     //commentsFragment.getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-                    commentsFragment.setTargetFragment( timeLineFragment,1);
+                    commentsFragment.setTargetFragment( fragment,1);
                     commentsFragment.show(fm, "");
                     //PreviewImageFragment previewImageFragment = PreviewImageFragment.newInstance(bundle);
                 }

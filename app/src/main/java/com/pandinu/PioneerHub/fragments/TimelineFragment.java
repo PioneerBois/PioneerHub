@@ -45,7 +45,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class TimelineFragment extends Fragment implements PostFragment.PostFragmentListener, CommentsFragment.CommentFragmentListener, Serializable {
+public class TimelineFragment extends Fragment implements PostFragment.PostFragmentListener, CommentsFragment.CommentFragmentListener {
     private static final String TAG = "TimeLineFragment";
     private static final String SAVED_RECYCLER_VIEW_DATASET_ID = "DATASET_ID";
     private static final String SAVED_RECYCLER_VIEW_STATUS_ID = "STATUS_ID";
