@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Parcelable;
 import android.util.Log;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.pandinu.PioneerHub.EndlessRecyclerViewScrollListener;
 import com.pandinu.PioneerHub.Post;
 import com.pandinu.PioneerHub.PostsAdapter;
 import com.pandinu.PioneerHub.R;
@@ -65,6 +67,9 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
     private RelativeLayout rlContent;
     private PostFragment postFragment;
     private Parcelable mListState;
+    private EndlessRecyclerViewScrollListener scrollListener;
+    private SwipeRefreshLayout swipeContainer;
+
 
 
 
@@ -171,8 +176,9 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
             allPosts = (ArrayList<Object>) savedInstanceState.getSerializable(SAVED_RECYCLER_VIEW_DATASET_ID);
             //Log.i(TAG, "length of all Posts: " + String.valueOf(allPosts.size()));
             adapter = new PostsAdapter(getContext(), allPosts, "Post");
+            final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             rvPosts.setAdapter(adapter);
-            rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+            rvPosts.setLayoutManager(linearLayoutManager);
 
 
             mListState = savedInstanceState.getParcelable(SAVED_RECYCLER_VIEW_STATUS_ID);
@@ -189,6 +195,29 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
                // Log.i(TAG, "mliststate or rvPost is null");
             }
 
+            scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    loadNextDataFromApi(page);
+                }
+            };
+
+            rvPosts.addOnScrollListener(scrollListener);
+
+            swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    queryForNewPost(currentChannel);
+                    swipeContainer.setRefreshing(false);
+                }
+            });
+
+            swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                    android.R.color.holo_green_light,
+                    android.R.color.holo_orange_light,
+                    android.R.color.holo_red_light);
+
 
         }else{
             postFragment = PostFragment.newInstance(currentChannel);
@@ -196,7 +225,31 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
             rvPosts = v.findViewById(R.id.rvPosts);
             adapter = new PostsAdapter(getContext(), allPosts, "Post");
             rvPosts.setAdapter(adapter);
-            rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+            final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+            rvPosts.setLayoutManager( linearLayoutManager);
+
+            scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    loadNextDataFromApi(totalItemsCount);
+                }
+            };
+
+            rvPosts.addOnScrollListener(scrollListener);
+
+            swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    queryForNewPost(currentChannel);
+                    swipeContainer.setRefreshing(false);
+                }
+            });
+
+            swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                    android.R.color.holo_green_light,
+                    android.R.color.holo_orange_light,
+                    android.R.color.holo_red_light);
 
             queryPost();
         }
@@ -204,6 +257,35 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
         return v;
     }
 
+    private void loadNextDataFromApi(int totalItemsCount) {
+        Log.i(TAG, "loadinmoredata");
+        Log.i(TAG, String.valueOf(totalItemsCount));
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        //query.whereLessThan(Post.KEY_CREATEDAT, allPosts.get(totalItemsCount-1));
+
+        Post post = (Post) allPosts.get(totalItemsCount-1);
+        query.whereLessThan(Post.KEY_CREATEDAT, post.getPostCreatedAt());
+        query.orderByDescending(Post.KEY_CREATEDAT);
+        query.whereEqualTo(Post.KEY_CHANNEL, currentChannel);
+        query.setLimit(20);
+
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if(e!=null){
+                    Log.i(TAG, "Issue with getting older posts", e);
+                    return;
+                }
+
+                Log.i(TAG, String.valueOf(posts.size()));
+
+
+                allPosts.addAll(totalItemsCount,posts);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+    }
 
 
     //Set up the channels to be clicked on
@@ -401,6 +483,7 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
                 allPosts.clear();
                 allPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
+                scrollListener.resetState();
             }
         });
 

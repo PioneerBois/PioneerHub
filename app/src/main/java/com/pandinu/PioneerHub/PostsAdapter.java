@@ -1,16 +1,23 @@
 package com.pandinu.PioneerHub;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -27,6 +34,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,6 +54,17 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.type = type;
         //this.fragment = fragment;
     }
+
+    /*public void clear() {
+        items.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Object> list) {
+        items.addAll(list);
+        notifyDataSetChanged();
+    }*/
 
     @NonNull
     @Override
@@ -163,6 +182,87 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             displayProfile(comment);
             displayCommentContent(comment);
             likes(comment, position);
+            options(comment);
+        }
+
+        private void options(Comments comment) {
+
+            ivOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(context, v);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.menu_options, popup.getMenu());
+                    popup.show();
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            switch (item.getItemId()) {
+                                case R.id.report:
+                                    //Log.i(TAG,"report the post" + comment.getDescription());
+
+                                    queryProfileForReport(comment);
+
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+
+
+                }
+            });
+        }
+
+        private void queryProfileForReport(Comments comment) {
+            ParseQuery<Profile> query= ParseQuery.getQuery("Profile");
+            query.whereEqualTo(Profile.KEY_USERID, comment.getUserId());
+            query.findInBackground(new FindCallback<Profile>() {
+                @Override
+                public void done(List<Profile> profile, ParseException e) {
+                    if(e!=null){
+                        Log.i(TAG,"Issue with getting profile", e);
+                        return;
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setData(Uri.parse("mailto:"));
+
+                    intent.setType("message/rfc822");
+                    // intent.setData(Uri.parse("mailto:"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Report the post");
+
+                    String profileInfo = profile.get(0).getFirstName() + " " + profile.get(0).getLastName();
+                    String date = comment.getCommentCreatedAt().toString();
+                    String description = comment.getDescription();
+
+                    String emailText = "The post to be reported has the following information: "
+                            + "\n" + profileInfo
+                            + "\n" + date
+                            + "\n" + description
+                            + "\n" + "\n"
+                            + "Please write in the reason to report the following post: "
+                            + "\n" + "\n" + "\n" + "\n" + "\n" + "\n" + "\n"
+                            + "Thank you for your time and we will deal with the post accordingly!";
+
+                    intent.putExtra(Intent.EXTRA_TEXT, emailText);
+
+                    /*if(.getImg()!=null){
+                        intent.putExtra(Intent.EXTRA_STREAM, post.getImg().getUrl());
+                    }*/
+
+                    if (intent.resolveActivity(context.getPackageManager()) != null) {
+                        context.startActivity(intent);
+                    }else{
+                        Log.i(TAG,"Issue with opening email app", e);
+                        return;
+                    }
+
+                }
+            });
         }
 
         private void likes(Comments comment, int position) {
@@ -341,6 +441,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tvLikeText = itemView.findViewById(R.id.tvLikeText);
             tvCommentText = itemView.findViewById(R.id.tvCommentNumber);
             ivOptions = itemView.findViewById(R.id.ivOptions);
+            //ivOptions.setOnCreateContextMenuListener(this);
             ivLikeIcon = itemView.findViewById(R.id.ivLikeIcon);
             ivCommentIcon = itemView.findViewById(R.id.ivCommentIcon);
             rlBottomPartPost = itemView.findViewById(R.id.rlBottomPartPost);
@@ -361,8 +462,93 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             displayPostContent(post);
             likes(post, position, type);
             comments(post, position);
+            options(post);
 
         }
+
+
+        private void options(Post post) {
+
+            ivOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(context, v);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.menu_options, popup.getMenu());
+                    popup.show();
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            switch (item.getItemId()) {
+                                case R.id.report:
+                                    Log.i(TAG,"report the post" + post.getDescription());
+
+                                    queryProfileForReport(post);
+
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+
+
+                }
+            });
+        }
+
+        private void queryProfileForReport(Post post) {
+            ParseQuery<Profile> query= ParseQuery.getQuery("Profile");
+            query.whereEqualTo(Profile.KEY_USERID, post.getUserId());
+            query.findInBackground(new FindCallback<Profile>() {
+                @Override
+                public void done(List<Profile> profile, ParseException e) {
+                    if(e!=null){
+                        Log.i(TAG,"Issue with getting profile", e);
+                        return;
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setData(Uri.parse("mailto:"));
+
+                    intent.setType("message/rfc822");
+                    // intent.setData(Uri.parse("mailto:"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Report the post");
+
+                    String profileInfo = profile.get(0).getFirstName() + " " + profile.get(0).getLastName();
+                    String date = post.getPostCreatedAt().toString();
+                    String channel = post.getChannel();
+                    String description = post.getDescription();
+
+                    String emailText = "The post to be reported has the following information: "
+                            + "\n" + profileInfo
+                            + "\n" + date
+                            + "\n" + channel
+                            + "\n" + description
+                            + "\n" + "\n"
+                            + "Please write in the reason to report the following post: "
+                            + "\n" + "\n" + "\n" + "\n" + "\n" + "\n" + "\n"
+                            + "Thank you for your time and we will deal with the post accordingly!";
+
+                    intent.putExtra(Intent.EXTRA_TEXT, emailText);
+
+                    if(post.getImg()!=null){
+                        intent.putExtra(Intent.EXTRA_STREAM, post.getImg().getUrl());
+                    }
+
+                    if (intent.resolveActivity(context.getPackageManager()) != null) {
+                        context.startActivity(intent);
+                    }else{
+                        Log.i(TAG,"Issue with opening email app", e);
+                        return;
+                    }
+
+                }
+            });
+        }
+
 
         //Display the comments for now
         private void comments(Post post, int position) {
@@ -603,5 +789,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             });
 
         }
+
+
     }
 }

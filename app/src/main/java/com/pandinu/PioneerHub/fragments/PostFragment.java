@@ -261,8 +261,8 @@ public class PostFragment extends Fragment  {
         Post post = new Post();
 
         if(description.isEmpty()){
-            Log.i(TAG, "description is empty");
-            Toast.makeText(getActivity(),"Post is empty", Toast.LENGTH_SHORT);
+            //Log.i(TAG, "description is empty");
+            Toast.makeText(getActivity(),"Post is empty", Toast.LENGTH_LONG).show();
             return;
         }
 
