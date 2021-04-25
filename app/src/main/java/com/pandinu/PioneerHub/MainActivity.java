@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pandinu.PioneerHub.fragments.LibraryFragment;
+import com.pandinu.PioneerHub.fragments.LoginFragment;
 import com.pandinu.PioneerHub.fragments.MapFragment;
 import com.pandinu.PioneerHub.fragments.PostFragment;
 import com.pandinu.PioneerHub.fragments.ProfileFragment;
@@ -29,7 +31,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private static final String TAG = "MainActivity";
     //private FragmentTransaction ft;
@@ -113,7 +115,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         super.onBackPressed();
-
-
     }
 }

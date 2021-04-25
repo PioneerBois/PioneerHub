@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="edit_dialog" parent="@style/ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:windowTitleStyle">@style/edit_dialog_title</item>
+    </style>
+
+    <style name="edit_dialog_title" parent="TextAppearance.AppCompat.Large">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:layout_gravity">center</item>
+
+<!--        <item name="android:windowIsFloating">false</item>-->
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--        <item name="android:windowSoftInputMode">stateAlwaysHidden</item>-->
+<!--        <item name="android:windowActionModeOverlay">true</item>-->
+<!--        <item name="android:windowIsTranslucent">true</item>-->
+
+    </style>
+
+</resources>

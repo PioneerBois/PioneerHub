@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.pandinu.PioneerHub.fragments.LoginFragment;
+import com.pandinu.PioneerHub.fragments.ProfileFragment;
 import com.pandinu.PioneerHub.fragments.RegisterFragment;
 import com.pandinu.PioneerHub.fragments.RegistrationSuccessfulFragment;
 
@@ -92,6 +93,5 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
         }
 
     }
-
 
 }
