@@ -17,6 +17,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Resource.class);
         ParseObject.registerSubclass(Comments.class);
+        ParseObject.registerSubclass(Map.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("vBoeIOouPnuOcVMbGdYY8wt5onZI8CX1rcE19am7")
