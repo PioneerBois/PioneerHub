@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.pandinu.PioneerHub.Map;
 import com.pandinu.PioneerHub.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 
 public class MapFragment extends Fragment {
@@ -62,34 +69,37 @@ public class MapFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 // when map is loaded
-                LatLng CSUEBLocation = new LatLng(37.657278029434785, -122.05746618815536);
-                float zoom = (float) 14;
+                final LatLng CSUEBLocation = new LatLng(37.657278029434785, -122.05746618815536);
+                float zoom = (float) 16;
                 googleMap.setMinZoomPreference(8);
-                googleMap.setMaxZoomPreference(18);
+                googleMap.setMaxZoomPreference(20);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CSUEBLocation, zoom));
-                Marker CSUEB = googleMap.addMarker(new MarkerOptions()
-                        .position(CSUEBLocation)
-                        .title("CSU East Bay")
-                        .snippet("Our Campus")
-                );
-                CSUEB.showInfoWindow();
 
-                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
+                ParseQuery<Map> query = ParseQuery.getQuery(Map.class);
+                query.findInBackground(new FindCallback<Map>() {
                     @Override
-                    public void onMapClick(LatLng latLng) {
-                        // When clicked on map
-                        // Initialize marker options
-                        MarkerOptions markerOptions = new MarkerOptions();
-                        // set position of marker
-                        markerOptions.position(latLng);
-                        // set title of marker
-                        markerOptions.title(latLng.latitude + ":" + latLng.longitude);
-                        // remove markers
-                        googleMap.clear();
-                        // animating to zoom the marker
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-                        // Add marker on map
-                        googleMap.addMarker(markerOptions);
+                    public void done(List<Map> mapLocations, ParseException e) {
+                        Log.i("Number of Locations", String.valueOf(mapLocations.size()));
+                        for(int i = 0; i < mapLocations.size(); i++){
+                            Map location = mapLocations.get(i);
+                            googleMap.addMarker(new MarkerOptions()
+                                    .position(new LatLng((double) location.getLatitude(), (double) location.getLongitude()))
+                                    .title(location.getLocationName())
+
+                            );
+
+                        }
+                        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                            @Override
+                            public boolean onMarkerClick(Marker marker) {
+
+                                // marker.getTitle();
+                                // marker.getPosition();
+                                return false;
+                            }
+                        });
+
                     }
                 });
 
