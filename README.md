@@ -2,9 +2,15 @@
 
 ## Table of Contents
 1. [Overview](#Overview)
-1. [Product Spec](#Product-Spec)
-1. [Wireframes](#Wireframes)
-2. [Schema](#Schema)
+2. [Product Spec](#Product-Spec)
+3. [Wireframes](#Wireframes)
+4. [Schema](#Schema)
+
+## Sprint Updates
+1. [Sprint 1](#Sprint-1)
+2. [Sprint 2](#Sprint-2)
+3. [Sprint 3](#Sprint-3)
+4. [Sprint 4](#Sprint-4)
 
 ## Overview
 ### Description
