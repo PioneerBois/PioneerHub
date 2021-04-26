@@ -13,17 +13,13 @@ import com.pandinu.PioneerHub.R;
 
 public class ResourceFragment extends Fragment {
 
-
-
     public ResourceFragment() {
         // Required empty public constructor
     }
-
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
