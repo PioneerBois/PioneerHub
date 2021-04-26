@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pandinu.PioneerHub.Model.Resource;
@@ -59,11 +60,13 @@ public class LibraryFragment extends Fragment {
         allResources = new ArrayList<>();
         adapter = new ResourcesAdapter(getContext(), allResources);
         rvResources.setAdapter(adapter);
-        rvResources.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvResources.setLayoutManager(new LinearLayoutManager(getContext()));
+        //rvResources.setLayoutManager(new GridLayoutManager(getContext(),2));
 
         queryResources();
     }
 
+    // Getting data resource
     private void queryResources() {
         ParseQuery<Resource> query = ParseQuery.getQuery(Resource.class);
         query.findInBackground(new FindCallback<Resource>() {
@@ -74,9 +77,11 @@ public class LibraryFragment extends Fragment {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
+                // Debugging
                 for (Resource resource : resources) {
                     Log.i(TAG, "Resource: " + resource.getName() + ", url: " + resource.getWebsiteUrl() + "image: " + resource.getThumbnail());
                 }
+                // All resource to array
                 allResources.addAll(resources);
                 adapter.notifyDataSetChanged();
             }

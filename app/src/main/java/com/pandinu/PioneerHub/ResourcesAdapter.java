@@ -53,15 +53,18 @@ public class ResourcesAdapter extends RecyclerView.Adapter<ResourcesAdapter.View
 
         private ImageView ivThumbnail;
         private TextView tvName;
+        private TextView tvDescription;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
             tvName = itemView.findViewById(R.id.tvName);
+            tvDescription = itemView.findViewById(R.id.tvDescription);
         }
 
         public void bind(Resource resource) {
             tvName.setText(resource.getName());
+            tvDescription.setText(resource.getDescription());
 
             // We made thumbnail optional, so we check if it exists in the back4app
             ParseFile image = resource.getThumbnail();

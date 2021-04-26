@@ -11,6 +11,7 @@ public class Resource extends ParseObject {
     public static final String KEY_NAME = "name";
     public static final String KEY_THUMBNAIL = "thumbnail";
     public static final String KEY_WEBSITE_URL = "websiteUrl";
+    public static final String KEY_DESCRIPTION = "description";
 
     // Name
     public String getName() {
@@ -35,4 +36,13 @@ public class Resource extends ParseObject {
     public void setWebsiteUrl(String websiteUrl) {
         put(KEY_WEBSITE_URL, websiteUrl);
     }
+
+    // Description
+    public String getDescription() {
+        return getString(KEY_DESCRIPTION);
+    }
+    public void setDescription(String description) {
+        put(KEY_DESCRIPTION, description);
+    }
+
 }
