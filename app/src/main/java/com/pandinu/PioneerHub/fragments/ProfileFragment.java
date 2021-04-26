@@ -1,9 +1,7 @@
 package com.pandinu.PioneerHub.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +9,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -31,26 +29,23 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pandinu.PioneerHub.LoginActivity;
-import com.pandinu.PioneerHub.MainActivity;
 import com.pandinu.PioneerHub.Post;
 import com.pandinu.PioneerHub.PostsAdapter;
 import com.pandinu.PioneerHub.Profile;
 import com.pandinu.PioneerHub.R;
-import com.parse.Parse;
-import com.parse.ParseFile;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
+import com.parse.SaveCallback;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class ProfileFragment extends Fragment {
+
+
     private ImageButton ibSetting, ibEditInfo, ibSendEmail;
     private ImageView ivCoverImage, ivProfileImage;
     private TextView tvUserFullName, tvUserInfo, tvUserDepartment;
@@ -96,9 +91,12 @@ public class ProfileFragment extends Fragment {
         getUserInfo();
 
         ibSendEmail = (ImageButton)v.findViewById(R.id.ib_sendEmail);
-        if(ParseUser.getCurrentUser().getObjectId() == getArguments().getString(ARG_USER_ID)){
-            ibSendEmail.setVisibility(View.GONE);
-        }
+        ibSendEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         ibEditInfo = (ImageButton)v.findViewById(R.id.ib_edit_info);
         if(ParseUser.getCurrentUser().getObjectId() != getArguments().getString(ARG_USER_ID)){
@@ -116,7 +114,7 @@ public class ProfileFragment extends Fragment {
         ibSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Opening settings page. Beep boop beep", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Opening settings page. Beep boop beep", Toast.LENGTH_SHORT).show();
                 showPopup(v);
             }
         });
@@ -125,6 +123,12 @@ public class ProfileFragment extends Fragment {
 
 
         ivProfileImage= (ImageView)v.findViewById(R.id.iv_profile_image);
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePhotoPopup(v);
+            }
+        });
 
 
         tvUserFullName= (TextView)v.findViewById(R.id.tv_full_name);
@@ -145,8 +149,43 @@ public class ProfileFragment extends Fragment {
 
         getPosts();
 
+        if(ParseUser.getCurrentUser().getObjectId() == getArguments().getString(ARG_USER_ID)){
+            ibSendEmail.setVisibility(View.GONE);
+//            ibSetting.setVisibility(View.GONE);
+//            ibEditInfo.setVisibility(View.GONE);
+        }
+//        if(ParseUser.getCurrentUser().getObjectId() != getArguments().getString(ARG_USER_ID)){
+////            ibSetting.setVisibility(View.GONE);
+////            ibEditInfo.setVisibility(View.GONE);
+//            ibSendEmail.setVisibility(View.GONE);
+//        }
+
         // Inflate the layout for this fragment
         return v;
+    }
+
+    private void changePhotoPopup(View v) {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+        popupMenu.getMenuInflater().inflate(R.menu.change_photo_menu, popupMenu.getMenu());
+
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.item_gallery:
+                        Toast.makeText(getContext(), "edit acc", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.item_camera:
+
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
     }
 
     private void getUserInfo() {
@@ -252,6 +291,8 @@ public class ProfileFragment extends Fragment {
                 switch (item.getItemId()){
                     case R.id.edit_acc:
                         Toast.makeText(getContext(), "edit acc", Toast.LENGTH_SHORT).show();
+                        EditAccountDialog editAccountDialog = new EditAccountDialog(ParseUser.getCurrentUser().getObjectId().toString());
+                        editAccountDialog.show(getActivity().getSupportFragmentManager(), "Example dialog");
                         break;
                     case R.id.logout:
                         Toast.makeText(getContext(), "logout", Toast.LENGTH_SHORT).show();
@@ -270,8 +311,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public static class EditProfileDialog extends AppCompatDialogFragment{
-        String userId;
-
+        private String userId;
         EditText et_firstName,
                 et_lastName,
                 et_gradYear,
@@ -289,7 +329,7 @@ public class ProfileFragment extends Fragment {
         public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.edit_dialog);
             LayoutInflater inflater = getActivity().getLayoutInflater();
-            View view = inflater.inflate(R.layout.edit_profile_dialog, null);
+            View view = inflater.inflate(R.layout.dialog_edit_profile, null);
 
             et_firstName = (EditText)view.findViewById(R.id.et_edit_firstName);
             et_lastName  = (EditText)view.findViewById(R.id.et_edit_lastName);
@@ -364,6 +404,107 @@ public class ProfileFragment extends Fragment {
                                     Log.i("Test","Profile not found.");
                                 }
                             });
+                        }
+                    });
+
+            return builder.create();
+        }
+    }
+
+    public static class EditAccountDialog extends AppCompatDialogFragment{
+        private String userId;
+        private boolean passwordIsSame;
+
+        EditText et_email, et_password, et_rePassword;
+
+        public EditAccountDialog(String userId){
+            this.userId = userId;
+            this.passwordIsSame = false;
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.edit_dialog);
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.dialog_edit_account, null);
+
+            et_email = (EditText)view.findViewById(R.id.et_email);
+            et_password = (EditText)view.findViewById(R.id.et_password);
+            et_rePassword = (EditText)view.findViewById(R.id.et_rePassword);
+
+
+
+            et_email.setText(ParseUser.getCurrentUser().getUsername());
+            et_password.setText("");
+            et_rePassword.setText("");
+
+//            et_rePassword.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                    Log.i("onTextChanged", s.toString());
+//                    Log.i("onTextChanged", "et_password: " + et_password.getText().toString());
+//                    if(s.toString() == "enterNewPassword"){
+//                        Log.i("onTextChanged", "Password is the same");
+//                    }
+//
+//                    if(s.toString() == et_password.getText().toString()){
+//                        Log.i("onTextChanged", "Success");
+//                        passwordIsSame = true;
+//                    }else{
+//                        passwordIsSame = false;
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//                    if(s.toString() == et_password.getText().toString()){
+//                        Log.i("afterTextChanged", "Success");
+//                        passwordIsSame = true;
+//                    }else{
+//                        passwordIsSame = false;
+//                    }
+//                }
+//            });
+            Log.i("et_email", String.valueOf(ParseUser.getCurrentUser().getUsername()));
+
+            builder.setView(view)
+                    .setTitle("Edit Account Info")
+                    .setIcon(R.drawable.ic_baseline_edit_24)
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            return;
+                        }
+                    })
+                    .setPositiveButton("Apply", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String pass = et_password.getText().toString();
+                            String rePass = et_rePassword.getText().toString();
+
+                            if (pass.equals(rePass) && !pass.equals("")){
+                                ParseUser.getCurrentUser().setPassword(pass);
+                                ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        Log.i("New Password", "New Password: " + pass);
+                                    }
+                                });
+
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                            }else{
+                                Log.i("New Password", "Password not changed.");
+                            }
+                            return;
                         }
                     });
 
