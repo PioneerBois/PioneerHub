@@ -6,10 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:scrollbars="none"
     tools:context=".fragments.PostFragment">
-
-
-
 
 
     <RelativeLayout
@@ -26,179 +24,100 @@
             android:layout_height="wrap_content"
             />
 
-
-
-
-        <RelativeLayout
-            android:id="@+id/rvProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_below="@+id/toolbar">
-
-            <ImageView
-                android:id="@+id/ivProfileImage"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/tvFirstName"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/ivProfileImage"
-                android:textSize="22sp"
-                android:textColor="@color/black"
-                tools:hint="Sushma Nayak"/>
-
-            <TextView
-                android:id="@+id/tvLastName"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/tvFirstName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/ivProfileImage"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                tools:hint="'@'sushmatn"
-                />
-
-
-        </RelativeLayout>
-
-
-
-        <RelativeLayout
-            android:id="@+id/llPost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@+id/rvProfile"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            >
-
-
-
-                />
             <EditText
+                android:layout_below="@+id/toolbar"
                 android:id="@+id/etPostDescription"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="start|top"
                 android:hint="@string/what_s_on_your_mind"
                 android:inputType="textMultiLine"
-                android:minLines="5"
-                android:maxLines="10"
+                android:minLines="15"
+                android:maxLines="20"
                 android:maxLength="280"
                 android:padding="10dp"
-                android:background="@drawable/full_border"
+                android:layout_margin="5dp"
+
                 />
-
-            <RelativeLayout
-                android:id="@+id/rvImageLayout"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/etPostDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/btnCancelImage"
-                    android:background="@drawable/ic_baseline_cancel_24"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp">
-                </Button>
-
-                <TextView
-                    android:id="@+id/tvImageName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/btnCancelImage"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/holo_blue_light"
-                    android:layout_marginLeft="10dp"
-                    tools:hint="photo.jpg"/>
-
-
-            </RelativeLayout>
-
-
-
-        </RelativeLayout>
-
-
-
 
 
         <RelativeLayout
             android:id="@+id/bottomOptions"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/llPost"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:background="@drawable/full_border"
-            android:layout_marginBottom="20dp"
-            android:layout_margin="20dp">
-
-
+            android:layout_below="@id/etPostDescription"
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/btnTakePhoto"
                 android:layout_alignParentStart="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="1dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_baseline_add_a_photo_24"
+                android:background="@drawable/ic_baseline_photo_camera_24"
 
                 />
 
             <Button
                 android:id="@+id/btnChoosePhoto"
+                android:visibility="gone"
                 android:layout_toRightOf="@+id/btnTakePhoto"
                 android:layout_marginLeft="5dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_baseline_add_photo_alternate_24"
+                android:background="@drawable/ic_baseline_photo_24"
 
                 />
 
 
 
-
-            <TextView
-                android:id="@+id/border"
-                android:layout_toLeftOf="@+id/btnComposePost"
-                android:background="@color/black"
-                android:layout_width="1dp"
-                android:layout_marginRight="5dp"
-                android:layout_height="40dp"/>
 
             <TextView
                 android:id="@+id/tvPostCounter"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginRight="15dp"
-                android:layout_toLeftOf="@+id/border"
+
+                android:layout_toRightOf="@+id/btnChoosePhoto"
                 android:text="280"
+                android:layout_marginLeft="10dp"
                 android:textColor="@color/black"
                 android:textSize="30sp" />
-            <Button
-                android:id="@+id/btnComposePost"
+
+
+            <RelativeLayout
+                android:id="@+id/rvImageLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="5dp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_baseline_done_24"
-                />
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="0dp"
+                android:visibility="gone"
+                android:layout_marginBottom="1dp">
+
+                <Button
+                    android:id="@+id/btnCancelImage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/ic_baseline_cancel_24"></Button>
+
+                <ImageView
+                    android:id="@+id/ivPreviewImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/btnCancelImage"
+                    android:textSize="20sp"
+                    android:src="@drawable/ic_csueb_wordmark"
+                    tools:hint="photo.jpg" />
+
+            </RelativeLayout>
+
 
         </RelativeLayout>
-    </RelativeLayout>
 
+
+    </RelativeLayout>
 </androidx.core.widget.NestedScrollView>

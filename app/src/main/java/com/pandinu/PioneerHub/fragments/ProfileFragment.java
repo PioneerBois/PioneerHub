@@ -1,5 +1,6 @@
 package com.pandinu.PioneerHub.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,12 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.pandinu.PioneerHub.LoginActivity;
 import com.pandinu.PioneerHub.Post;
 import com.pandinu.PioneerHub.PostsAdapter;
 import com.pandinu.PioneerHub.Profile;
@@ -40,6 +43,7 @@ public class ProfileFragment extends Fragment implements CommentsFragment.Commen
     private TextView tvUserFullName, tvUserInfo, tvUserDepartment;
     private RecyclerView rvUserPosts;
     private PostsAdapter adapter;
+    private Button logOut;
 
     private ArrayList<Object> userPosts;
 
@@ -76,6 +80,17 @@ public class ProfileFragment extends Fragment implements CommentsFragment.Commen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        logOut = v.findViewById(R.id.logOut);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         getUserInfo();
 

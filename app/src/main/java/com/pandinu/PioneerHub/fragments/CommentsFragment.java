@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -176,6 +177,8 @@ public class CommentsFragment extends DialogFragment {
 
                 etComments.setText("");
 
+                hideKeyBoard();
+
                 queryForNewComment();
                 listener.successfulComment(timelinePostPosition);
 
@@ -190,6 +193,19 @@ public class CommentsFragment extends DialogFragment {
 
         //ParseQuery<Comments> query = ParseQuery.getQuery("Comments");
 
+    }
+
+    private void hideKeyBoard() {
+        /*View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }*/
+
+        final InputMethodManager imm = (InputMethodManager) etComments.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(etComments.getWindowToken(), 0);
+
+        Log.i(TAG, "hidekeyboard");
     }
 
     private void  queryForNewComment() {
@@ -218,6 +234,7 @@ public class CommentsFragment extends DialogFragment {
                         items.add(1, comment);
                     }
 
+                    rvItems.scrollToPosition(0);
                     adapter.notifyDataSetChanged();
 
                 }
@@ -246,6 +263,7 @@ public class CommentsFragment extends DialogFragment {
                 for(Comments comment: objects){
                     items.add(1,comment);
                 }
+
 
                 adapter.notifyDataSetChanged();
             }
