@@ -32,7 +32,7 @@ PioneerHub is a social platform that connects the CSUEB community together. Pion
 * [X]Users are able to view a live feed
 * [X]Users are able to like a post
 * []Users are able to comment to a post
-* []Users are able to customize their profile
+* [X]Users are able to customize their profile
 * [X]Users are able to access a resource hub to know about the different student services CSUEB provides
 * ...
 
@@ -157,5 +157,23 @@ Wireframe for resources, stream, profile, create post and Campus map
 <img src="https://i.imgur.com/nYL0TSn.gif" width=300>
 <img src="https://i.imgur.com/eLmCKof.gif" width=300>
 <img src="https://i.imgur.com/HXwFdx5.gif" width=300>
+
+
+### Sprint 4
+* [X] Users can now change their password
+* [X] Implemented an edit profile dialog
+* [X] users can now logout
+* [X] implemented Map fragment
+* [X] Changed layout for login & Register
+
+### Images from sprint 4
+<img src="https://i.imgur.com/Wb57sqE.png" width=300>
+<img src="https://i.imgur.com/fQotmQn.png" width=300>
+<img src="https://i.imgur.com/WPE8O5X.png" width=300>
+<img src="https://i.imgur.com/V6G3rQB.png" width=300>
+<img src="https://i.imgur.com/1zj44wo.png" width=300>
+<img src="https://i.imgur.com/PXAfPKq.png" width=300>
+
+
 
 
