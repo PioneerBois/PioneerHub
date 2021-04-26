@@ -28,6 +28,8 @@ public class Comments extends ParseObject {
 
     public ParseUser getRepliedPostId() { return getParseUser(KEY_REPLIEDPOSTID); }
 
+    public void setRepliedPostId(ParseObject repliedPostId) { put(KEY_REPLIEDPOSTID, repliedPostId); }
+
     public ParseUser getUserId(){
         return getParseUser(KEY_USERID);
     }

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Parcelable;
 import android.util.Log;
@@ -30,19 +31,23 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.pandinu.PioneerHub.EndlessRecyclerViewScrollListener;
 import com.pandinu.PioneerHub.Post;
 import com.pandinu.PioneerHub.PostsAdapter;
 import com.pandinu.PioneerHub.R;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-public class TimelineFragment extends Fragment implements PostFragment.PostFragmentListener{
+public class TimelineFragment extends Fragment implements PostFragment.PostFragmentListener, CommentsFragment.CommentFragmentListener {
     private static final String TAG = "TimeLineFragment";
     private static final String SAVED_RECYCLER_VIEW_DATASET_ID = "DATASET_ID";
     private static final String SAVED_RECYCLER_VIEW_STATUS_ID = "STATUS_ID";
@@ -62,6 +67,9 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
     private RelativeLayout rlContent;
     private PostFragment postFragment;
     private Parcelable mListState;
+    private EndlessRecyclerViewScrollListener scrollListener;
+    private SwipeRefreshLayout swipeContainer;
+
 
 
 
@@ -168,8 +176,9 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
             allPosts = (ArrayList<Object>) savedInstanceState.getSerializable(SAVED_RECYCLER_VIEW_DATASET_ID);
             //Log.i(TAG, "length of all Posts: " + String.valueOf(allPosts.size()));
             adapter = new PostsAdapter(getContext(), allPosts, "Post");
+            final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             rvPosts.setAdapter(adapter);
-            rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+            rvPosts.setLayoutManager(linearLayoutManager);
 
 
             mListState = savedInstanceState.getParcelable(SAVED_RECYCLER_VIEW_STATUS_ID);
@@ -186,6 +195,29 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
                // Log.i(TAG, "mliststate or rvPost is null");
             }
 
+            scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    loadNextDataFromApi(page);
+                }
+            };
+
+            rvPosts.addOnScrollListener(scrollListener);
+
+            swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    queryForNewPost(currentChannel);
+                    swipeContainer.setRefreshing(false);
+                }
+            });
+
+            swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                    android.R.color.holo_green_light,
+                    android.R.color.holo_orange_light,
+                    android.R.color.holo_red_light);
+
 
         }else{
             postFragment = PostFragment.newInstance(currentChannel);
@@ -193,7 +225,31 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
             rvPosts = v.findViewById(R.id.rvPosts);
             adapter = new PostsAdapter(getContext(), allPosts, "Post");
             rvPosts.setAdapter(adapter);
-            rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+            final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+            rvPosts.setLayoutManager( linearLayoutManager);
+
+            scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+                @Override
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    loadNextDataFromApi(totalItemsCount);
+                }
+            };
+
+            rvPosts.addOnScrollListener(scrollListener);
+
+            swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    queryForNewPost(currentChannel);
+                    swipeContainer.setRefreshing(false);
+                }
+            });
+
+            swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                    android.R.color.holo_green_light,
+                    android.R.color.holo_orange_light,
+                    android.R.color.holo_red_light);
 
             queryPost();
         }
@@ -201,6 +257,35 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
         return v;
     }
 
+    private void loadNextDataFromApi(int totalItemsCount) {
+        Log.i(TAG, "loadinmoredata");
+        Log.i(TAG, String.valueOf(totalItemsCount));
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        //query.whereLessThan(Post.KEY_CREATEDAT, allPosts.get(totalItemsCount-1));
+
+        Post post = (Post) allPosts.get(totalItemsCount-1);
+        query.whereLessThan(Post.KEY_CREATEDAT, post.getPostCreatedAt());
+        query.orderByDescending(Post.KEY_CREATEDAT);
+        query.whereEqualTo(Post.KEY_CHANNEL, currentChannel);
+        query.setLimit(20);
+
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if(e!=null){
+                    Log.i(TAG, "Issue with getting older posts", e);
+                    return;
+                }
+
+                Log.i(TAG, String.valueOf(posts.size()));
+
+
+                allPosts.addAll(totalItemsCount,posts);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+    }
 
 
     //Set up the channels to be clicked on
@@ -304,8 +389,10 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
 
     private void insertNestedFragment() {
         //postFragment = PostFragment.newInstance(currentChannel);
+
+        //getChildFragmentManager().popBackStack();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.child_fragment_container, postFragment).addToBackStack("null").commit();
+        transaction.replace(R.id.child_fragment_container, postFragment).addToBackStack(null).commit();
 
         childFrameLayout.setVisibility(View.VISIBLE);
         mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -396,6 +483,7 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
                 allPosts.clear();
                 allPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
+                scrollListener.resetState();
             }
         });
 
@@ -408,32 +496,39 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
         Log.i(TAG, "queryForNewPost");
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
-        Post post = (Post) allPosts.get(0);
-        query.whereGreaterThan(Post.KEY_CREATEDAT, post.getPostCreatedAt());
-        query.orderByDescending(Post.KEY_CREATEDAT);
-        query.whereEqualTo(Post.KEY_CHANNEL, currentChannel);
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if(e!=null){
-                    Log.i(TAG, "Issue with getting new Post", e);
-                    return;
+
+        if(allPosts.size() > 0) {
+            Post post = (Post) allPosts.get(0);
+            query.whereGreaterThan(Post.KEY_CREATEDAT, post.getPostCreatedAt());
+            query.orderByDescending(Post.KEY_CREATEDAT);
+            query.whereEqualTo(Post.KEY_CHANNEL, currentChannel);
+            query.findInBackground(new FindCallback<Post>() {
+                @Override
+                public void done(List<Post> posts, ParseException e) {
+                    if (e != null) {
+                        Log.i(TAG, "Issue with getting new Post", e);
+                        return;
+                    }
+
+
+                    //Log.i(TAG, "Getting back how many posts: " + String.valueOf(posts.size()));
+                    for (Post post : posts) {
+                        allPosts.add(0, post);
+                        //adapter.notifyItemChanged(0);
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    //rvPosts.smoothScrollToPosition(0);
+                    rvPosts.scrollToPosition(0);
+
+                    //Log.i("TAG", "The post at position 0 description: " + allPosts.get(0).getDescription());
                 }
+            });
+        }else{
 
 
-                //Log.i(TAG, "Getting back how many posts: " + String.valueOf(posts.size()));
-                for(Post post:  posts){
-                    allPosts.add(0, post);
-                    //adapter.notifyItemChanged(0);
-                }
-
-                adapter.notifyDataSetChanged();
-                //rvPosts.smoothScrollToPosition(0);
-                rvPosts.scrollToPosition(0);
-
-               //Log.i("TAG", "The post at position 0 description: " + allPosts.get(0).getDescription());
-            }
-        });
+            queryPost();
+        }
 
     }
 
@@ -444,12 +539,15 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
+
+
         mListState = rvPosts.getLayoutManager().onSaveInstanceState();
         //save recyclerview position
         outState.putParcelable(SAVED_RECYCLER_VIEW_STATUS_ID, mListState);
 
         //save recycler items
         outState.putSerializable(SAVED_RECYCLER_VIEW_DATASET_ID,  allPosts);
+
 
         //save the channel
         outState.putString("channel", currentChannel);
@@ -464,7 +562,50 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
             //getChildFragmentManager().putFragment(outState, "postFragment", postFragment);
             Log.i(TAG, "Post Fragment is not visible");
         }
+
+        //getChildFragmentManager().popBackStack();
     }
+
+    @Override
+    public void successfulComment(int timelinePostPosition) {
+        Log.i(TAG, "made a successful comment");
+
+        Post post = (Post) allPosts.get(timelinePostPosition);
+        post.increment(Post.KEY_COMMENTSCOUNT, 1);
+        String postObjectId = post.getPostObjectId();
+
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e!=null){
+                    Log.i(TAG,"isuse with updating post in background", e);
+                    return;
+                }
+
+
+
+                queryAndInsertUpdatedPost(timelinePostPosition, postObjectId);
+            }
+        });
+
+    }
+
+    //Set the new post at the position and notify the adapter the item has changed
+    private void queryAndInsertUpdatedPost(int position, String postObjectId) {
+        ParseQuery<Post> query = ParseQuery.getQuery("Post");
+        query.getInBackground(postObjectId, new GetCallback<Post>() {
+            @Override
+            public void done(Post post, ParseException e) {
+                if(e!=null){
+                    Log.e(TAG, "Issue with querying updated post" , e);
+                    return;
+                }
+                allPosts.set(position, post);
+                adapter.notifyItemChanged(position);
+            }
+        });
+    }
+
 
 
 }

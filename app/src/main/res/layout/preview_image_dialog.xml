@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
 
-    <!-- The ActionBar displayed at the top -->
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/timeline_toolbar"
+
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:background="@drawable/ic_baseline_cancel_24"
+        android:layout_width="40dp"
+        android:layout_margin="18dp"
+        android:layout_height="40dp"/>
+    <TextView
+        android:layout_toRightOf="@+id/cancel_button"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:text="fewfewfew.jpg"
+        android:textColor="@color/black"
+        android:id="@+id/tvPhotoFileName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="30dp"
+        android:layout_height="wrap_content"/>
 
     <ImageView
         android:id="@+id/ivPreviewImage"
+        android:layout_below="@+id/tvPhotoFileName"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</LinearLayout>
+</RelativeLayout>

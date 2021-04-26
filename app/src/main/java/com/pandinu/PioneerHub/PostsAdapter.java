@@ -1,24 +1,31 @@
 package com.pandinu.PioneerHub;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.pandinu.PioneerHub.fragments.CommentsFragment;
-import com.pandinu.PioneerHub.fragments.PreviewImageFragment;
+import com.pandinu.PioneerHub.fragments.TimelineFragment;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -27,11 +34,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.File;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -39,8 +43,8 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static final String TAG = "PostsAdapter";
     private Context context;
     private List<Object> items;
-    private boolean userLiked = false;
     private String type;
+    private Fragment fragment;
 
     private final int POST = 0, COMMENTS = 1;
 
@@ -48,7 +52,19 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.context = context;
         this.items = items;
         this.type = type;
+        //this.fragment = fragment;
     }
+
+    /*public void clear() {
+        items.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Object> list) {
+        items.addAll(list);
+        notifyDataSetChanged();
+    }*/
 
     @NonNull
     @Override
@@ -166,6 +182,87 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             displayProfile(comment);
             displayCommentContent(comment);
             likes(comment, position);
+            options(comment);
+        }
+
+        private void options(Comments comment) {
+
+            ivOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(context, v);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.menu_options, popup.getMenu());
+                    popup.show();
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            switch (item.getItemId()) {
+                                case R.id.report:
+                                    //Log.i(TAG,"report the post" + comment.getDescription());
+
+                                    queryProfileForReport(comment);
+
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+
+
+                }
+            });
+        }
+
+        private void queryProfileForReport(Comments comment) {
+            ParseQuery<Profile> query= ParseQuery.getQuery("Profile");
+            query.whereEqualTo(Profile.KEY_USERID, comment.getUserId());
+            query.findInBackground(new FindCallback<Profile>() {
+                @Override
+                public void done(List<Profile> profile, ParseException e) {
+                    if(e!=null){
+                        Log.i(TAG,"Issue with getting profile", e);
+                        return;
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setData(Uri.parse("mailto:"));
+
+                    intent.setType("message/rfc822");
+                    // intent.setData(Uri.parse("mailto:"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Report the post");
+
+                    String profileInfo = profile.get(0).getFirstName() + " " + profile.get(0).getLastName();
+                    String date = comment.getCommentCreatedAt().toString();
+                    String description = comment.getDescription();
+
+                    String emailText = "The post to be reported has the following information: "
+                            + "\n" + profileInfo
+                            + "\n" + date
+                            + "\n" + description
+                            + "\n" + "\n"
+                            + "Please write in the reason to report the following post: "
+                            + "\n" + "\n" + "\n" + "\n" + "\n" + "\n" + "\n"
+                            + "Thank you for your time and we will deal with the post accordingly!";
+
+                    intent.putExtra(Intent.EXTRA_TEXT, emailText);
+
+                    /*if(.getImg()!=null){
+                        intent.putExtra(Intent.EXTRA_STREAM, post.getImg().getUrl());
+                    }*/
+
+                    if (intent.resolveActivity(context.getPackageManager()) != null) {
+                        context.startActivity(intent);
+                    }else{
+                        Log.i(TAG,"Issue with opening email app", e);
+                        return;
+                    }
+
+                }
+            });
         }
 
         private void likes(Comments comment, int position) {
@@ -183,25 +280,23 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 public void onClick(View v) {
                     //String commentObjectId = comment.getCommentObjectId();
 
-                    if(userLiked){
+                    updateComment(userLiked, comment, position);
+
+                    /*if(userLiked){
                         updateComment("removeUserId", comment, position);
                     }else{
                         updateComment("addUserId", comment, position);
-                    }
+                    }*/
                 }
             });
 
         }
 
-        private void updateComment(String toRemoveOrAddId, Comments comment, int position) {
+        private void updateComment(boolean userLiked, Comments comment, int position) {
             String currentUserId = ParseUser.getCurrentUser().getObjectId();
             String commentObjectId = comment.getCommentObjectId();
-            ParseQuery<Comments> query = ParseQuery.getQuery("Commments");
 
-            query.whereEqualTo(Comments.KEY_OBJECTID, commentObjectId);
-            query.whereEqualTo(Comments.KEY_USERID, currentUserId);
-
-            if(toRemoveOrAddId.equals("removeUserId")){
+            if(userLiked){
                 comment.removeAll(Post.KEY_LIKESARRAY, Arrays.asList(currentUserId));
                 comment.increment(Post.KEY_LIKESCOUNT, -1);
                 comment.saveInBackground(new SaveCallback() {
@@ -346,6 +441,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tvLikeText = itemView.findViewById(R.id.tvLikeText);
             tvCommentText = itemView.findViewById(R.id.tvCommentNumber);
             ivOptions = itemView.findViewById(R.id.ivOptions);
+            //ivOptions.setOnCreateContextMenuListener(this);
             ivLikeIcon = itemView.findViewById(R.id.ivLikeIcon);
             ivCommentIcon = itemView.findViewById(R.id.ivCommentIcon);
             rlBottomPartPost = itemView.findViewById(R.id.rlBottomPartPost);
@@ -365,12 +461,97 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             displayChannelInfo(post);
             displayPostContent(post);
             likes(post, position, type);
-            comments(post);
+            comments(post, position);
+            options(post);
 
         }
 
+
+        private void options(Post post) {
+
+            ivOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(context, v);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.menu_options, popup.getMenu());
+                    popup.show();
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            switch (item.getItemId()) {
+                                case R.id.report:
+                                    Log.i(TAG,"report the post" + post.getDescription());
+
+                                    queryProfileForReport(post);
+
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+
+
+                }
+            });
+        }
+
+        private void queryProfileForReport(Post post) {
+            ParseQuery<Profile> query= ParseQuery.getQuery("Profile");
+            query.whereEqualTo(Profile.KEY_USERID, post.getUserId());
+            query.findInBackground(new FindCallback<Profile>() {
+                @Override
+                public void done(List<Profile> profile, ParseException e) {
+                    if(e!=null){
+                        Log.i(TAG,"Issue with getting profile", e);
+                        return;
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setData(Uri.parse("mailto:"));
+
+                    intent.setType("message/rfc822");
+                    // intent.setData(Uri.parse("mailto:"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Report the post");
+
+                    String profileInfo = profile.get(0).getFirstName() + " " + profile.get(0).getLastName();
+                    String date = post.getPostCreatedAt().toString();
+                    String channel = post.getChannel();
+                    String description = post.getDescription();
+
+                    String emailText = "The post to be reported has the following information: "
+                            + "\n" + profileInfo
+                            + "\n" + date
+                            + "\n" + channel
+                            + "\n" + description
+                            + "\n" + "\n"
+                            + "Please write in the reason to report the following post: "
+                            + "\n" + "\n" + "\n" + "\n" + "\n" + "\n" + "\n"
+                            + "Thank you for your time and we will deal with the post accordingly!";
+
+                    intent.putExtra(Intent.EXTRA_TEXT, emailText);
+
+                    if(post.getImg()!=null){
+                        intent.putExtra(Intent.EXTRA_STREAM, post.getImg().getUrl());
+                    }
+
+                    if (intent.resolveActivity(context.getPackageManager()) != null) {
+                        context.startActivity(intent);
+                    }else{
+                        Log.i(TAG,"Issue with opening email app", e);
+                        return;
+                    }
+
+                }
+            });
+        }
+
+
         //Display the comments for now
-        private void comments(Post post) {
+        private void comments(Post post, int position) {
             int commentsCount = post.getCommentsCount().intValue();
             if(commentsCount > 0){
                 tvCommentText.setVisibility(View.VISIBLE);
@@ -387,11 +568,14 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 @Override
                 public void onClick(View v) {
                     FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
-                    CommentsFragment commentsFragment = CommentsFragment.newInstance(post);
+
+                    Fragment fragment = fm.findFragmentById(R.id.container);
+
+                    CommentsFragment commentsFragment = CommentsFragment.newInstance(post, position);
                     //commentsFragment.setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme);
                     //commentsFragment.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                     //commentsFragment.getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-
+                    commentsFragment.setTargetFragment( fragment,1);
                     commentsFragment.show(fm, "");
                     //PreviewImageFragment previewImageFragment = PreviewImageFragment.newInstance(bundle);
                 }
@@ -430,11 +614,12 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 public void onClick(View v) {
                    // String postObjectId = post.getPostObjectId();
 
-                    if(userLiked){
+                    updatePost(userLiked, post, position);
+                    /*if(userLiked){
                         updatePost("removeUserId", post, position);
                     }else{
                         updatePost("addUserId", post, position);
-                    }
+                    }*/
                 }
             });
         }
@@ -502,12 +687,11 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         //Call queryAndInsertUpdatedPost to query insert the newly updated post to the position
         //in the recyclerview
 
-        private void updatePost(String toRemoveOrAddId, Post post , int position) {
+        private void updatePost(boolean userLiked, Post post , int position) {
             String currentUserId = ParseUser.getCurrentUser().getObjectId();
-            ParseQuery<Post> query = ParseQuery.getQuery("Post");
             String postObjectId = post.getPostObjectId();
 
-                if(toRemoveOrAddId.equals("removeUserId")){
+                if(userLiked){
                     post.removeAll(Post.KEY_LIKESARRAY, Arrays.asList(currentUserId));
                     post.increment(Post.KEY_LIKESCOUNT, -1);
                     post.saveInBackground(new SaveCallback() {
@@ -605,5 +789,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             });
 
         }
+
+
     }
 }

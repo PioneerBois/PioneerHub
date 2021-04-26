@@ -1,54 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.RegistrationSuccessfulFragment">
+    android:fillViewport="true"
+    android:background="@drawable/successful_register"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
 
-    <ImageView
-        android:id="@+id/ivCheckMark"
-        android:layout_marginTop="175dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_baseline_check_circle_outline_24"
-        android:layout_width="150dp"
-        android:layout_height="150dp"/>
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_below="@+id/ivCheckMark"
-        android:layout_centerHorizontal="true"
-        android:text="Congratulations!"
-        android:layout_marginTop="10dp"
-        android:textSize="30dp"
-        android:textAlignment="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/tvMessage"
-        android:layout_below="@+id/tvTitle"
-        android:layout_centerHorizontal="true"
-        android:text="You have succesfully registered."
-        android:layout_marginTop="20dp"
-        android:textAlignment="center"
-        android:textSize="25dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
-    <Button
-        android:id="@+id/btnConfirm"
-        android:drawablePadding="10dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:backgroundTint="@color/colorPrimary"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textSize="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="@string/login"
-        android:layout_below="@id/tvMessage"/>
+        android:layout_height="match_parent"
+        tools:context=".fragments.RegistrationSuccessfulFragment">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/ivCheckMark"
+            android:layout_marginTop="75dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_baseline_check_circle_outline_24"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:fontFamily="serif"
+            android:textColor="@color/white"
+            android:layout_below="@+id/ivCheckMark"
+            android:layout_centerHorizontal="true"
+            android:text="Congratulations!"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_below="@+id/tvTitle"
+            android:fontFamily="serif"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:text="You have succesfully registered."
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/login"
+            android:layout_marginBottom="125dp"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

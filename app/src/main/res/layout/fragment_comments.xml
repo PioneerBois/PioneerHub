@@ -17,13 +17,15 @@
         android:id="@+id/rvItems"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/etComments"/>
 
     <EditText
         android:id="@+id/etComments"
-        android:layout_toLeftOf="@+id/fabToPost"
+        android:layout_toLeftOf="@+id/fabToComment"
         android:layout_width="match_parent"
         android:layout_margin="5dp"
+
         android:elevation="20dp"
         android:hint="@string/add_a_comment"
         android:inputType="textMultiLine"
@@ -36,7 +38,7 @@
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabToPost"
+        android:id="@+id/fabToComment"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_alignParentBottom="true"

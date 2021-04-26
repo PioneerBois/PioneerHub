@@ -1,89 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".LoginActivity">
+    android:fillViewport="true"
+    android:background="@drawable/login_background"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/tvLoginTitle"
-        android:text="@string/app_name"
-        android:layout_marginTop="50dp"
-        android:textSize="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/etEmail"
-        android:drawableLeft="@drawable/ic_baseline_email_24"
-        android:drawablePadding="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/email"
-        android:singleLine="true"
-        android:imeOptions="actionNext"
-        android:maxLength="30"
-        android:layout_below="@+id/tvLoginTitle"/>
+        android:layout_height="match_parent"
+        tools:context=".LoginActivity"
+        >
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:drawableLeft="@drawable/ic_baseline_lock_24"
-        android:drawablePadding="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/password"
-        android:layout_below="@id/etEmail"
-        android:singleLine="true"
-        android:imeOptions="actionDone"
-        android:maxLength="30"
-        android:inputType="textPassword"/>
+        <ImageView
+            android:id="@+id/logo"
+            android:src="@drawable/csueb_logo"
+            android:layout_width="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_height="100dp"/>
 
-    <TextView
-        android:id="@+id/tvForgotPassword"
-        android:drawablePadding="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:textSize="15dp"
-        android:layout_alignParentRight="true"
-        android:text="Forgot Password?"
-        android:layout_below="@id/etPassword"/>
+        <TextView
+            android:id="@+id/tvLoginTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:layout_marginTop="22dp"
+            android:fontFamily="serif"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="50dp" />
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:drawablePadding="10dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textSize="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="@string/login"
-        android:layout_below="@id/etPassword"/>
+        <EditText
+            android:id="@+id/etEmail"
+            android:drawableLeft="@drawable/ic_baseline_email_24"
+            android:drawablePadding="10dp"
+            android:fontFamily="serif"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/email"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:maxLength="30"
+            android:layout_below="@+id/tvLoginTitle"/>
 
-    <TextView
-        android:id="@+id/tvRegister"
-        android:text="@string/don_t_have_an_account_register"
-        android:layout_marginTop="50dp"
-        android:textSize="18dp"
-        android:layout_marginBottom="25dp"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/etPassword"
+            android:drawableLeft="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="10dp"
+            android:fontFamily="serif"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/password"
+            android:layout_below="@id/etEmail"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:imeOptions="actionDone"
+            android:maxLength="30"
+            android:inputType="textPassword"/>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:fontFamily="serif"
+            android:textSize="15dp"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:text="Forgot Password?"
+            android:layout_below="@id/etPassword"/>
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:drawablePadding="10dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="100dp"
+            android:fontFamily="serif"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/login"
+            android:layout_above="@id/tvRegister"/>
+
+        <TextView
+            android:id="@+id/tvRegister"
+            android:text="@string/don_t_have_an_account_register"
+            android:textSize="18dp"
+            android:fontFamily="serif"
+            android:layout_marginBottom="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>
+

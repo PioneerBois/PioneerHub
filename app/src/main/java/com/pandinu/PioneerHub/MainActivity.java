@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String channel  = getString(R.string.student_feed);
-        timeLineFragment = TimelineFragment.newInstance(channel);
+        //String channel  = getString(R.string.student_feed);
+        //timeLineFragment = TimelineFragment.newInstance(channel);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity{
                         fragment = libraryFragment.newInstance();
                         break;
                     case R.id.action_timeline:
-                        //String channel  = getString(R.string.student_feed);
-                        //timeLineFragment = TimelineFragment.newInstance(channel);
+                        String channel  = getString(R.string.student_feed);
+                        timeLineFragment = TimelineFragment.newInstance(channel);
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, timeLineFragment).commit();
                         //timeLineFragment.queryPost();
@@ -96,12 +96,19 @@ public class MainActivity extends AppCompatActivity{
         FragmentManager fm = getSupportFragmentManager();
         for (Fragment frag : fm.getFragments()) {
             if (frag.isVisible()) {
+                Log.i(TAG,"fragment is vis");
                 FragmentManager childFm = frag.getChildFragmentManager();
                 if (childFm.getBackStackEntryCount() > 0) {
-                    childFm.popBackStack();
+
+                    for(int i = 0; i < childFm.getBackStackEntryCount() ; ++i) {
+                        childFm.popBackStack();
+                    }
+                    Log.i(TAG,"Childframgnet count > 0");
                     if(frag instanceof TimelineFragment){
                         View view = frag.getView();
                         if(view != null){
+
+                            Log.i(TAG,"is not null");
                             FrameLayout childFrameLayout = view.findViewById(R.id.child_fragment_container);
                             childFrameLayout.setVisibility(View.GONE);
                             DrawerLayout mDrawer = (DrawerLayout) view.findViewById(R.id.drawer_layout);
@@ -110,6 +117,9 @@ public class MainActivity extends AppCompatActivity{
                     }
                     //finish();
                     return;
+                }else{
+                   //fm.popBackStack();
+                   //findViewById(R.id.container).setVisibility(View.GONE);
                 }
             }
         }
