@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +25,7 @@ public class ResourcesAdapter extends RecyclerView.Adapter<ResourcesAdapter.View
 
     private Context context;
     private List<Resource> resources;
+    private CardView cardView;
 
     public ResourcesAdapter(Context context, List<Resource> resources) {
         this.context = context;
@@ -60,6 +62,7 @@ public class ResourcesAdapter extends RecyclerView.Adapter<ResourcesAdapter.View
             ivThumbnail = itemView.findViewById(R.id.ivThumbnail);
             tvName = itemView.findViewById(R.id.tvName);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            cardView = itemView.findViewById(R.id.card_view);
         }
 
         public void bind(Resource resource) {
@@ -74,10 +77,9 @@ public class ResourcesAdapter extends RecyclerView.Adapter<ResourcesAdapter.View
                         .into(ivThumbnail);
             }
 
-            ivThumbnail.setOnClickListener(new View.OnClickListener() {
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show();
                     String url = resource.getWebsiteUrl();
 
                     Uri webpage = Uri.parse(url);
