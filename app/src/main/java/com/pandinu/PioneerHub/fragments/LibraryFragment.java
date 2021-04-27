@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +30,8 @@ public class LibraryFragment extends Fragment {
     private RecyclerView rvResources;
     private ResourcesAdapter adapter;
     private List<Resource> allResources;
+
+    private Toolbar toolbar;
 
     public LibraryFragment() {
         // Required empty public constructor
@@ -56,6 +59,9 @@ public class LibraryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvResources = view.findViewById(R.id.rvResources);
+
+        toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setTitle("Resources");
 
         allResources = new ArrayList<>();
         adapter = new ResourcesAdapter(getContext(), allResources);
