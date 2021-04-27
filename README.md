@@ -127,7 +127,12 @@ Wireframe for resources, stream, profile, create post and Campus map
     
     * Register
      <img src="https://drive.google.com/uc?export=view&id=1cmA65vxRyDx7jMQsy8m_SOG5Np9mkK2c" width=800>
-      <img src="https://drive.google.com/uc?export=view&id=1zlbrVG5PF64D9INPg6tIW5Ubo2zNukpg" width=800>
+     <img src="https://drive.google.com/uc?export=view&id=1zlbrVG5PF64D9INPg6tIW5Ubo2zNukpg" width=800>
+     
+     * Timeline
+     <img src="https://drive.google.com/uc?export=view&id=1Zsx5QQ0coIQXjRR6qfH2QYmUxYU7LlKe" width=800>
+     <img src="https://drive.google.com/uc?export=view&id=1WrQSrCHbz-cr6KHyEFEWuOXHcnsRgPmi" width=800>
+     
    
     
     
