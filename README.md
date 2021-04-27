@@ -14,7 +14,7 @@
 
 ## Overview
 ### Description
-PioneerHub is a social platform that connects the CSUEB community together. PioneerHub is your go-to for reaching out to not only your classmates but also your department peers. Features include feed that displays student post, a hub that gathers different resouces on campus on one screen, displaying and editing users profile, and a simple map that drops down locations of buildings on campus. PioneerHub is here to provide a sense of community and unity to the CSUEB family.
+PioneerHub is a social platform that connects the CSUEB community together. PioneerHub is your go-to for reaching out to not only your classmates but also your department peers. Features include feed that displays student post, a hub that gathers different resouces on campus on one screen, displaying and editing users profile, and a simple map that drops down locations of the buildings on campus. PioneerHub is here to provide a sense of community and unity to the CSUEB family.
 
 
 ### App Evaluation
@@ -135,7 +135,14 @@ Wireframe for resources, stream, profile, create post and Campus map
      
      * Profile
      <img src="https://drive.google.com/uc?export=view&id=1VYx6GQ9JN_TJAljdk4GQRTWY2pIMkBU4" width=800>
-      <img src="https://drive.google.com/uc?export=view&id= 1fx0dKOPY4iQ76ZDQNCDKQD6RIJfJBqcu" width=800>
+     <img src="https://drive.google.com/uc?export=view&id=1fx0dKOPY4iQ76ZDQNCDKQD6RIJfJBqcu" width=800>
+      
+     * Campus Resources
+     <img src="https://drive.google.com/uc?export=view&id=10depBhSXjIA46xRpKOmc9K2YG2TOLIum" width=800>
+     
+     * Map
+     <img src="https://drive.google.com/uc?export=view&id=1UZ-L7xy9M_RqmFHWUcGP_I6ods-UKEEY" width=800>
+      
     
      
      
