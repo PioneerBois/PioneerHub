@@ -108,17 +108,17 @@ Wireframe for resources, stream, profile, create post and Campus map
 [Add table of models]
 
 
-<img src="https://drive.google.com/uc?export=view&id=1Qa9YvP09fK_c3_kXBT6lBoypF5zDEIVt" width=800>
+<img src="https://i.imgur.com/OyimQdb.png" width=700>
 
-<img src="https://drive.google.com/uc?export=view&id=1N9hGZ47CgkeLVQgf24QEr7Q_pTexxIXB" width=700>
+<img src="https://i.imgur.com/wOLd5mh.png" width=800>
 
-<img src="https://drive.google.com/uc?export=view&id=1wj2K4pui4OXgOwUC0jwyKsJqrjzUH7Cv" width=800>
+<img src="https://i.imgur.com/3dV53Ef.png" width=800>
 
-<img src="https://drive.google.com/uc?export=view&id=1CAKFbg1RW3yIecnAyKIwJWScg6EV3T-F" width=800>
+<img src="https://i.imgur.com/st5iKiX.png" width=800>
 
-<img src="https://drive.google.com/uc?export=view&id=11WVRmjJhgRszFpXysBkVZ_79Cu7kCzaD" width=800>
+<img src="https://i.imgur.com/tbBA0MM.png" width=800>
 
-<img src="https://drive.google.com/uc?export=view&id=1vYxihp7yQOd4MPS1Mk5sGTGEbweNUcLj" width=800>
+<img src="https://i.imgur.com/GVTDKkc.png" width=800>
 
 ### Networking
 - [Add list of network requests by screen ]
