@@ -111,7 +111,7 @@ Wireframe for resources, stream, profile, create post and Campus map
 ### Models
 [Add table of models]
 
-<img src="https://drive.google.com/file/d/1Qa9YvP09fK_c3_kXBT6lBoypF5zDEIVt/view?usp=sharing" width=600>
+![image](https://drive.google.com/uc?export=view&id=1Qa9YvP09fK_c3_kXBT6lBoypF5zDEIVt)
 
 
 <img src="https://imgur.com/fe3NjeE.jpeg" width=600>
