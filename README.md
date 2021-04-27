@@ -123,25 +123,25 @@ Wireframe for resources, stream, profile, create post and Campus map
 ### Networking
 - [Add list of network requests by screen ]
     * Login
-    <img src="https://drive.google.com/uc?export=view&id=1qATop7bhon7ZKy6pN9lzt2cnA1j13e4H" width=800>
+    <img src="https://i.imgur.com/4fb2xpU.png" width=800>
     
     * Register
-     <img src="https://drive.google.com/uc?export=view&id=1cmA65vxRyDx7jMQsy8m_SOG5Np9mkK2c" width=800>
-     <img src="https://drive.google.com/uc?export=view&id=1zlbrVG5PF64D9INPg6tIW5Ubo2zNukpg" width=800>
+     <img src="https://i.imgur.com/lertFSo.png" width=800>
+     <img src="https://i.imgur.com/ERZP6ni.png" width=800>
      
      * Timeline
-     <img src="https://drive.google.com/uc?export=view&id=1Zsx5QQ0coIQXjRR6qfH2QYmUxYU7LlKe" width=800>
-     <img src="https://drive.google.com/uc?export=view&id=1WrQSrCHbz-cr6KHyEFEWuOXHcnsRgPmi" width=800>
+     <img src="https://i.imgur.com/8dcUgYe.png" width=800>
+     <img src="https://i.imgur.com/ap9pJBY.png" width=800>
      
      * Profile
-     <img src="https://drive.google.com/uc?export=view&id=1VYx6GQ9JN_TJAljdk4GQRTWY2pIMkBU4" width=800>
-     <img src="https://drive.google.com/uc?export=view&id=1fx0dKOPY4iQ76ZDQNCDKQD6RIJfJBqcu" width=800>
+     <img src="https://i.imgur.com/rpOjBLo.png" width=800>
+     <img src="https://i.imgur.com/nw3zvpG.png" width=800>
       
      * Campus Resources
-     <img src="https://drive.google.com/uc?export=view&id=10depBhSXjIA46xRpKOmc9K2YG2TOLIum" width=800>
+     <img src="https://i.imgur.com/Aa5zgPM.png" width=800>
      
      * Map
-     <img src="https://drive.google.com/uc?export=view&id=1UZ-L7xy9M_RqmFHWUcGP_I6ods-UKEEY" width=800>
+     <img src="https://i.imgur.com/iyBxZmw.png" width=800>
       
     
      
