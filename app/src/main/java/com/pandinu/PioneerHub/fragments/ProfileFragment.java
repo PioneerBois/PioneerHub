@@ -13,8 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -48,7 +46,7 @@ public class ProfileFragment extends Fragment {
 
     private ImageButton ibSetting, ibEditInfo, ibSendEmail;
     private ImageView ivCoverImage, ivProfileImage;
-    private TextView tvUserFullName, tvUserInfo, tvUserDepartment;
+    private TextView tvUserFullName, tvUserInfo, tvUserDepartment, tvGradDate;
     private RecyclerView rvUserPosts;
     private PostsAdapter adapter;
 
@@ -56,7 +54,7 @@ public class ProfileFragment extends Fragment {
 
     public static final String ARG_USER_ID = "USER_ID";
 
-    private String firstName, lastName, profileDesc, major, profileImg, coverImg;
+    private String firstName, lastName, profileDesc, major, profileImg, coverImg, gradYear, gradMonth;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -89,6 +87,9 @@ public class ProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         getUserInfo();
+
+        tvGradDate = (TextView)v.findViewById(R.id.tv_grad_date);
+        tvGradDate.setText("MM, YYYY");
 
         ibSendEmail = (ImageButton)v.findViewById(R.id.ib_sendEmail);
         ibSendEmail.setOnClickListener(new View.OnClickListener() {
@@ -199,11 +200,15 @@ public class ProfileFragment extends Fragment {
             if (e == null) {
                 for (ParseObject result : results) {
                     Profile profile = (Profile) result;
-                    Log.i("Test", profile.getFirstName() + " " + profile.getLastName());
+                    Log.i("Test_test", profile.getFirstName() + " " + profile.getGraduationYear());
                     firstName = profile.getFirstName();
                     lastName = profile.getLastName();
                     profileDesc = profile.getProfileDesc();
                     major = profile.getMajor();
+                    Log.i("GRAD_DATE", "Year: " + profile.getGraduationYear() );
+                    Log.i("GRAD_DATE", "Month: " + profile.getGraduationMonth() );
+                    gradYear = String.valueOf(profile.getGraduationYear()) ;
+                    gradMonth = String.valueOf(profile.getGraduationMonth());
                     profileImg = (profile.getProfileImg().getUrl() == null) ? getProfileURL(temp_user.getObjectId()): profile.getProfileImg().getUrl();
                     coverImg = null;
                 }
@@ -232,6 +237,13 @@ public class ProfileFragment extends Fragment {
         tvUserFullName.setText(firstName + " " + lastName);
         tvUserInfo.setText(profileDesc);
         tvUserDepartment.setText(major);
+
+        if(gradYear == null || gradMonth == null){
+            tvGradDate.setText("TBD");
+        }else {
+            tvGradDate.setText(gradMonth + ", " + gradYear);
+        }
+
 
         Log.i("Profile_img","Provided Profile_img: "+  profileImg);
 
@@ -387,12 +399,30 @@ public class ProfileFragment extends Fragment {
                                         Profile profile = (Profile) result;
                                         Log.i("Test", profile.getFirstName() + " " + profile.getLastName());
                                         result = (Profile)result;
-                                        ((Profile) result).setFirstName(et_firstName.getText().toString());
-                                        ((Profile) result).setLastName(et_lastName.getText().toString());
-                                        ((Profile) result).setMajor(et_major.getText().toString());
-                                        ((Profile) result).setGraduationYear(Integer.parseInt(et_gradYear.getText().toString()));
-                                        ((Profile) result).setGraduationMonth(Integer.parseInt(et_gradMonth.getText().toString()));
-                                        ((Profile) result).setProfileDesc(et_description.getText().toString());
+                                        if(!et_firstName.getText().toString().equals("")){
+                                            ((Profile) result).setFirstName(et_firstName.getText().toString());
+                                        }
+                                        if(!et_lastName.getText().toString().equals("")){
+                                            ((Profile) result).setLastName(et_lastName.getText().toString());
+                                        }
+
+                                        if(et_major.getText().toString().equals("")){
+                                            ((Profile) result).setMajor("Undecided");
+                                        }else{
+                                            ((Profile) result).setMajor(et_major.getText().toString());
+                                        }
+                                        if (!et_gradYear.getText().toString().equals("")){
+                                            ((Profile) result).setGraduationYear(Integer.parseInt(et_gradYear.getText().toString()));
+                                        }
+                                        if(!et_gradMonth.getText().toString().equals("")){
+                                            ((Profile) result).setGraduationMonth(Integer.parseInt(et_gradMonth.getText().toString()));
+                                        }
+
+                                        if(!et_description.getText().toString().equals("")){
+                                            ((Profile) result).setProfileDesc(et_description.getText().toString());
+                                        }else{
+                                            ((Profile) result).setProfileDesc(" ");
+                                        }
                                         result.saveInBackground();
 
                                         //Couldnt figure our how to send back to profile with updated info
