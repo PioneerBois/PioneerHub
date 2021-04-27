@@ -115,14 +115,13 @@ Wireframe for resources, stream, profile, create post and Campus map
 
 ![image](https://drive.google.com/uc?export=view&id=1N9hGZ47CgkeLVQgf24QEr7Q_pTexxIXB)
 
-<img src="https://drive.google.com/uc?export=view&id=1wj2K4pui4OXgOwUC0jwyKsJqrjzUH7Cv" width=800>
+![image](https://drive.google.com/uc?export=view&id=1wj2K4pui4OXgOwUC0jwyKsJqrjzUH7Cv)
 
+![image](https://drive.google.com/uc?export=view&id=1CAKFbg1RW3yIecnAyKIwJWScg6EV3T-F)
 
-<img src="https://drive.google.com/uc?export=view&id=1CAKFbg1RW3yIecnAyKIwJWScg6EV3T-F" width=800>
+![image](https://drive.google.com/uc?export=view&id=11WVRmjJhgRszFpXysBkVZ_79Cu7kCzaD)
 
-<img src="https://imgur.com/UMWTAIH.jpeg" width=600>
-
-<img src="https://imgur.com/Ktjuf6o.jpeg" width=600>
+![image](https://drive.google.com/uc?export=view&id=1vYxihp7yQOd4MPS1Mk5sGTGEbweNUcLj)
 
 ### Networking
 - [Add list of network requests by screen ]
