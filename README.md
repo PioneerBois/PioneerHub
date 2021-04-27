@@ -104,7 +104,7 @@ Wireframe for resources, stream, profile, create post and Campus map
 <img src="https://imgur.com/9JHkLc0.jpeg" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
-<img src="https://docs.google.com/drawings/d/e/2PACX-1vSWHcv0f9OJ9dz_nknVwS0dP6iqRshxcBro6BnlYSEb0McNr1rX3VeZi0LVKBXkVoLMeff499JlX3qU/pub?w=960&amp;h=720">
+<img src="https://docs.google.com/drawings/d/e/2PACX-1vSWHcv0f9OJ9dz_nknVwS0dP6iqRshxcBro6BnlYSEb0McNr1rX3VeZi0LVKBXkVoLMeff499JlX3qU/pub?w=880&amp;h=620">
 
 ### [BONUS] Interactive Prototype
 
