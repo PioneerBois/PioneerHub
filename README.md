@@ -122,12 +122,12 @@ Wireframe for resources, stream, profile, create post and Campus map
 
 ### Networking
 - [Add list of network requests by screen ]
-    Login
+    * Login
     <img src="https://drive.google.com/uc?export=view&id=1qATop7bhon7ZKy6pN9lzt2cnA1j13e4H" width=800>
     
-    Register
+    * Register
      <img src="https://drive.google.com/uc?export=view&id=1cmA65vxRyDx7jMQsy8m_SOG5Np9mkK2c" width=800>
-    <img src="https://drive.google.com/uc?export=view&id=1zlbrVG5PF64D9INPg6tIW5Ubo2zNukpg" width=800>
+      <img src="https://drive.google.com/uc?export=view&id=1zlbrVG5PF64D9INPg6tIW5Ubo2zNukpg" width=800>
    
     
     
