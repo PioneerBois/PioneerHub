@@ -37,7 +37,7 @@ PioneerHub is a social platform that connects the CSUEB community together. Pion
 * [X]Users are able to create a post
 * [X]Users are able to view a live feed
 * [X]Users are able to like a post
-* []Users are able to comment to a post
+* [X]Users are able to comment to a post
 * [X]Users are able to customize their profile
 * [X]Users are able to access a resource hub to know about the different student services CSUEB provides
 * ...
