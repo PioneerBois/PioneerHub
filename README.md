@@ -111,17 +111,18 @@ Wireframe for resources, stream, profile, create post and Campus map
 ### Models
 [Add table of models]
 
-![image](https://drive.google.com/uc?export=view&id=1Qa9YvP09fK_c3_kXBT6lBoypF5zDEIVt width=600)
+
+<img src="https://drive.google.com/uc?export=view&id=1Qa9YvP09fK_c3_kXBT6lBoypF5zDEIVt" width=800>
 
 <img src="https://drive.google.com/uc?export=view&id=1N9hGZ47CgkeLVQgf24QEr7Q_pTexxIXB" width=800>
 
-![image](https://drive.google.com/uc?export=view&id=1wj2K4pui4OXgOwUC0jwyKsJqrjzUH7Cv)
+<img src="https://drive.google.com/uc?export=view&id=1wj2K4pui4OXgOwUC0jwyKsJqrjzUH7Cv" width=800>
 
-![image](https://drive.google.com/uc?export=view&id=1CAKFbg1RW3yIecnAyKIwJWScg6EV3T-F)
+<img src="https://drive.google.com/uc?export=view&id=1CAKFbg1RW3yIecnAyKIwJWScg6EV3T-F" width=800>
 
-![image](https://drive.google.com/uc?export=view&id=11WVRmjJhgRszFpXysBkVZ_79Cu7kCzaD)
+<img src="https://drive.google.com/uc?export=view&id=11WVRmjJhgRszFpXysBkVZ_79Cu7kCzaD" width=800>
 
-![image](https://drive.google.com/uc?export=view&id=1vYxihp7yQOd4MPS1Mk5sGTGEbweNUcLj)
+<img src="https://drive.google.com/uc?export=view&id=1vYxihp7yQOd4MPS1Mk5sGTGEbweNUcLj" width=800>
 
 ### Networking
 - [Add list of network requests by screen ]
