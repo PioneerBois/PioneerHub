@@ -110,6 +110,10 @@ Wireframe for resources, stream, profile, create post and Campus map
 ## Schema
 ### Models
 [Add table of models]
+
+<img src="https://drive.google.com/file/d/1Qa9YvP09fK_c3_kXBT6lBoypF5zDEIVt/view?usp=sharing" width=600>
+
+
 <img src="https://imgur.com/fe3NjeE.jpeg" width=600>
 
 <img src="https://imgur.com/UMWTAIH.jpeg" width=600>
