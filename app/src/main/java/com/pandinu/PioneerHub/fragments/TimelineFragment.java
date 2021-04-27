@@ -476,10 +476,6 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
                     return;
                 }
 
-                /*for(Post post: posts){
-                    Log.i(TAG,"Post: " + post.getDescription());
-                }*/
-
                 allPosts.clear();
                 allPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
@@ -496,7 +492,6 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
         Log.i(TAG, "queryForNewPost");
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
-
         if(allPosts.size() > 0) {
             Post post = (Post) allPosts.get(0);
             query.whereGreaterThan(Post.KEY_CREATEDAT, post.getPostCreatedAt());
@@ -509,8 +504,6 @@ public class TimelineFragment extends Fragment implements PostFragment.PostFragm
                         Log.i(TAG, "Issue with getting new Post", e);
                         return;
                     }
-
-
                     //Log.i(TAG, "Getting back how many posts: " + String.valueOf(posts.size()));
                     for (Post post : posts) {
                         allPosts.add(0, post);

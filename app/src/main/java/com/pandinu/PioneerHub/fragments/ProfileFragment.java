@@ -33,6 +33,7 @@ import com.pandinu.PioneerHub.Post;
 import com.pandinu.PioneerHub.PostsAdapter;
 import com.pandinu.PioneerHub.Profile;
 import com.pandinu.PioneerHub.R;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -43,9 +44,10 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements CommentsFragment.CommentFragmentListener {
 
 
+    private static final String TAG = "ProfileFragment";
     private ImageButton ibSetting, ibEditInfo, ibSendEmail;
     private ImageView ivCoverImage, ivProfileImage;
     private TextView tvUserFullName, tvUserInfo, tvUserDepartment;
@@ -308,6 +310,46 @@ public class ProfileFragment extends Fragment {
             }
         });
         popupMenu.show();
+    }
+
+    @Override
+    public void successfulComment(int timelinePostPosition) {
+        Log.i(TAG, "made a successful comment");
+
+        Post post = (Post) userPosts.get(timelinePostPosition);
+        post.increment(Post.KEY_COMMENTSCOUNT, 1);
+        String postObjectId = post.getPostObjectId();
+
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e!=null){
+                    Log.i(TAG,"isuse with updating post in background", e);
+                    return;
+                }
+
+
+
+                queryAndInsertUpdatedPost(timelinePostPosition, postObjectId);
+            }
+        });
+
+    }
+
+    //Set the new post at the position and notify the adapter the item has changed
+    private void queryAndInsertUpdatedPost(int position, String postObjectId) {
+        ParseQuery<Post> query = ParseQuery.getQuery("Post");
+        query.getInBackground(postObjectId, new GetCallback<Post>() {
+            @Override
+            public void done(Post post, ParseException e) {
+                if(e!=null){
+                    Log.e(TAG, "Issue with querying updated post" , e);
+                    return;
+                }
+                userPosts.set(position, post);
+                adapter.notifyItemChanged(position);
+            }
+        });
     }
 
     public static class EditProfileDialog extends AppCompatDialogFragment{
