@@ -122,11 +122,17 @@ Wireframe for resources, stream, profile, create post and Campus map
 
 ### Networking
 - [Add list of network requests by screen ]
-    <img src="https://imgur.com/irftWUh.jpeg" width=600>
-    <img src="https://imgur.com/W8aCT4h.jpeg" width=600>
+    Login
+    <img src="https://drive.google.com/uc?export=view&id=1qATop7bhon7ZKy6pN9lzt2cnA1j13e4H" width=800>
+    
+    Register
+     <img src="https://drive.google.com/uc?export=view&id=1cmA65vxRyDx7jMQsy8m_SOG5Np9mkK2c" width=800>
+    <img src="https://drive.google.com/uc?export=view&id=1zlbrVG5PF64D9INPg6tIW5Ubo2zNukpg" width=800>
+   
+    
+    
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
-    <img src="https://imgur.com/fHup2br.jpeg" width=600>
 
 ### Sprint 1
 * [X] Created several layouts for different pages
