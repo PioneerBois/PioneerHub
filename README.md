@@ -114,7 +114,7 @@ Wireframe for resources, stream, profile, create post and Campus map
 
 <img src="https://drive.google.com/uc?export=view&id=1Qa9YvP09fK_c3_kXBT6lBoypF5zDEIVt" width=800>
 
-<img src="https://drive.google.com/uc?export=view&id=1N9hGZ47CgkeLVQgf24QEr7Q_pTexxIXB" width=800>
+<img src="https://drive.google.com/uc?export=view&id=1N9hGZ47CgkeLVQgf24QEr7Q_pTexxIXB" width=700>
 
 <img src="https://drive.google.com/uc?export=view&id=1wj2K4pui4OXgOwUC0jwyKsJqrjzUH7Cv" width=800>
 
